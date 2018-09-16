@@ -21,12 +21,14 @@ local background = display.newImage("images/spacebackground.png")
     background.y = centerHeight
 
 -- Definindo botões do gamepad
-local leftArrow = display.newImage("images/left.png")
-    leftArrow.x = 50
-    leftArrow.y = 100
-local rightArrow = display.newImage("images/right.png")
-    rightArrow.x = 50
-    rightArrow.y = 300
+local leftArrow = display.newImage("images/arrow.png")
+    leftArrow.x = display.contentCenterX - 550 
+    leftArrow.y = display.contentCenterY + 300
+    leftArrow.rotation = -90
+local rightArrow = display.newImage("images/arrow.png")
+    rightArrow.x = display.contentCenterX - 400
+    rightArrow.y = display.contentCenterY + 300
+    rightArrow.rotation = 90
 
 -- Criando gamepad
 local function stopShip(event)
@@ -52,8 +54,9 @@ end
 function createShip()
     ship = display.newImage ("images/ship.png")
     physics.addBody(ship, "static", {density = 1, friction = 0, bounce = 0});
-    ship.x = 150
-    ship.y = display.contentCenterY
+    ship.x = display.contentCenterX
+    ship.y = display.contentCenterY + 250
+    ship.rotation = -90
     ship.myName = "ship"
 end
 
