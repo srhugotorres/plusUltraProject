@@ -16,4 +16,8 @@
 * Licença : CC0 Public Domain - CC0 1.0 Universal (CC0 1.0) Public Domain Dedication- https://creativecommons.org/publicdomain/zero/1.0/
 * Fonte: https://pxhere.com/pt/photo/1438039
 
-
+##### asteroidSmall.png:
+* Nome: -
+* Autor: Jasper - https://opengameart.org/users/jasper 
+* Licença: CC0 Public Domain - CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+* Fonte: https://opengameart.org/content/asteroid-generator-and-a-set-of-generated-asteroids

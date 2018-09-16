@@ -8,7 +8,7 @@ physics.start()
 physics.setGravity(0,0)
 
 -- Variáveis global
-local shipMoveY = 0
+local shipMoveX = 0
 local ship 
 local speed = 6 
 
@@ -33,22 +33,22 @@ local rightArrow = display.newImage("images/arrow.png")
 -- Criando gamepad
 local function stopShip(event)
     if event.phase == "ended" then
-        shipMoveY = 0 
+        shipMoveX = 0 
     end
 end
 
 local function moveShip(event)
-    ship.y = ship.y + shipMoveY
+    ship.x = ship.x + shipMoveX
 end
 
 
 function leftArrowtouch()
-    shipMoveY = - speed
+    shipMoveX = - speed
 end
 
 
 function rightArrowtouch()
-    shipMoveY = speed
+    shipMoveX = speed
 end
 
 function createShip()
@@ -59,11 +59,34 @@ function createShip()
     ship.rotation = -90
     ship.myName = "ship"
 end
+-- Asteroid
+local function createAsteroid()
+
+	local newAsteroid = display.newImageRect("images/asteroidSmall.png", 150, 150)
+	   	table.insert( {}, newAsteroid)
+	   	physics.addBody( newAsteroid, "dynamic", { radius=70, bounce=0.8 } )
+	   	newAsteroid.myName = "asteroid"
+
+   	local whereFrom = math.random(1)
+        if ( whereFrom == 1 ) then
+	        newAsteroid.x = math.random(-20,display.contentCenterY+740)
+            newAsteroid.y = display.contentCenterY  - 300
+	        newAsteroid:setLinearVelocity(0, 100)
+		end
+	newAsteroid:applyTorque( math.random( -6,6 ) )
+end
 
 -- Núcleo do jogo
 function startGame()
-    createShip()
     
+    createShip()
+    createAsteroid()
+    createAsteroid()
+    createAsteroid()
+    createAsteroid()
+    createAsteroid()
+    createAsteroid()
+    createAsteroid()
     rightArrow:addEventListener ("touch", rightArrowtouch)
     leftArrow:addEventListener("touch", leftArrowtouch)
     Runtime:addEventListener("enterFrame", moveShip)
