@@ -50,7 +50,14 @@ end
 function rightArrowtouch()
     shipMoveX = speed
 end
-
+local function createWalls(event)	
+    if ship.x < 0 then
+       ship.x = 0
+    end
+    if ship.x > display.contentWidth - 1 then
+       ship.x = display.contentWidth - 1
+    end
+end
 function createShip()
     ship = display.newImage ("images/ship.png")
     physics.addBody(ship, "static", {density = 1, friction = 0, bounce = 0});
@@ -59,6 +66,7 @@ function createShip()
     ship.rotation = -90
     ship.myName = "ship"
 end
+
 -- Asteroid
 local function createAsteroid()
 
@@ -91,6 +99,7 @@ function startGame()
     leftArrow:addEventListener("touch", leftArrowtouch)
     Runtime:addEventListener("enterFrame", moveShip)
     Runtime:addEventListener("touch", stopShip)
+    Runtime:addEventListener("enterFrame", createWalls)
     
 end
     
