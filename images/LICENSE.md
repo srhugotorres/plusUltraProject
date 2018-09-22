@@ -17,8 +17,15 @@
 Public Domain Dedication - https://creativecommons.org/publicdomain/zero/1.0/ 
 * Fonte: https://opengameart.org/content/space-background
 
-##### asteroidSmall.png:
+##### asteroid.png:
 * Nome: -
 * Autor: Jasper - https://opengameart.org/users/jasper 
 * Licença: CC0 Public Domain - CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
 * Fonte: https://opengameart.org/content/asteroid-generator-and-a-set-of-generated-asteroids
+
+
+##### menuScreen.png
+* Nome: Solar System
+* Autor: ac3raven - https://opengameart.org/users/ac3raven
+* Licença: Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) - https://creativecommons.org/licenses/by-sa/3.0/
+* Fonte: https://opengameart.org/content/solar-system

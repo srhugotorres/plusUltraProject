@@ -1,20 +1,9 @@
 local composer = require( "composer" )
  
 local scene = composer.newScene()
- 
--- -----------------------------------------------------------------------------------
--- Code outside of the scene event functions below will only be executed ONCE unless
--- the scene is removed entirely (not recycled) via "composer.removeScene()"
--- -----------------------------------------------------------------------------------
- 
- 
- 
- 
--- -----------------------------------------------------------------------------------
--- Scene event functions
--- -----------------------------------------------------------------------------------
- 
--- create()
+
+
+
 function scene:create( event )
  
     local sceneGroup = self.view
@@ -32,6 +21,7 @@ function scene:show( event )
     if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)
         local gameOver = display.newText("Game Over",display.contentCenterX,display.contentCenterY,native.systemFont, 200 )
+            gameOver:setFillColor( 0.82, 0.86, 1 )
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
  
