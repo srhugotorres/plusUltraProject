@@ -22,10 +22,10 @@ local gamerLoopTimer
 local createShip
 
 -- Background 
-local background = display.newImageRect(backGroup,"images/spacebackground.png", 3375,6000)
+local background = display.newImageRect(backGroup,"images/spacebackground.png", 1536,2048)
 	background.x = centerWidth
     background.y = centerHeight
-    background.alpha = 0.22
+    
 
 -- Definindo botões do gamepad
 
@@ -70,7 +70,7 @@ local function createEdges(event)
     end
 end
 function createShip()
-    ship = display.newImageRect (mainGroup,"images/ship.png",64,64)
+    ship = display.newImageRect (mainGroup,"images/ship.png",70,96)
     physics.addBody(ship, "static", {radius=50, isSensor=true});
     ship.x = display.contentCenterX
     ship.y = (display.contentCenterY) * 1.65 
@@ -81,7 +81,7 @@ end
 -- Asteroid
 local function createAsteroid()
 
-	local asteroid = display.newImageRect(mainGroup,"images/asteroidSmall.png", 150, 150)
+	local asteroid = display.newImageRect(mainGroup,"images/asteroid.png", 150, 150)
 	   	table.insert( asteroidsTable, asteroid)
 	   	physics.addBody( asteroid, "dynamic", { radius=48, bounce=0.8 } )
 	   	asteroid.myName = "asteroid"
