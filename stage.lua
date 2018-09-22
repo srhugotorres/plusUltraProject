@@ -111,6 +111,8 @@ local function onCollision( event )
         if ( ( obj1.myName == "ship" and obj2.myName == "asteroid" ) or ( obj1.myName == "asteroid" and obj2.myName == "ship" ) ) then
                 died = true
                 ship.alpha = 0
+                composer.gotoScene("gameover")
+
         end
      end
 end
