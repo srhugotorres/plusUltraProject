@@ -24,7 +24,7 @@ local arrowAjust = 0.586510264
 
 -- Funções Global
 function scrollSky(self,event)
-    if self.y > 100 then
+    if self.y > 800 then
         self.y = 0.1
     else
         self.y = self.y + self.speed
