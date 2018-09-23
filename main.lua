@@ -17,4 +17,4 @@ display.setStatusBar( display.HiddenStatusBar )
 -- include composer
 local composer = require "composer"
 
-composer.gotoScene("titleScreen")
+composer.gotoScene("scripts.titleScreen")
