@@ -23,6 +23,15 @@ local asteroidsTable ={}
 local arrowAjust = 0.586510264
 
 -- Funções Global
+function scrollSky(self,event)
+    if self.y > 100 then
+        self.y = 0.1
+    else
+        self.y = self.y + self.speed
+    end
+end
+
+
 local function createShip()
     ship = display.newImageRect (mainGroup,"images/ship.png",70,96)
     physics.addBody(ship, "static", {radius=50, isSensor=true});
@@ -140,7 +149,9 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Background 
-    local background = display.newImageRect(backGroup,"images/spacebackground.png", 1536,2048)
+    local background = display.newImageRect(backGroup,"images/spacebackground.png",2732,2048 )
+        background.rotation = -90
+        background.speed = 0.5
         background.x = centerWidth
         background.y = centerHeight
 
@@ -157,6 +168,8 @@ function scene:create( event )
     function startGame()
     
         createShip()
+        background.enterFrame = scrollSky
+        Runtime:addEventListener("enterFrame",background)
         timer.performWithDelay( 500, asteroidGenerator, 0 )
         rightArrow:addEventListener ("touch", rightArrowtouch)
         leftArrow:addEventListener("touch", leftArrowtouch)
