@@ -26,8 +26,29 @@ Projeto acadêmico de desenvolvimento para cadeira de Estágio Supervisionado 1
 ### Sistema de Vida: 
 * Quando um asteroide atinge a nave o recomeça do desde o ponto inicial(Não há registro de progresso no decorrer do jogo).
 ### Sistema de Pontos: 
-* Asteroides pequenos: 10 pontos.
-* Asteroides médios: 100 pontos.
-* Asteroides grandes: 1000 pontos.
+#### Tempo
+* Cada segundo sem morrer: 0.016 ponto
+* Cada minuto sem morrer: 1 ponto
+#### Ganhando Pontos
+* Destruição de lixo espacial : 0
+* Destruição de asteroides pequenos: 10 pontos.
+* Destruição de asteroides médios: 100 pontos.
+* Destruição de asteroides grandes: 1000 pontos.
+#### Perdendo Pontos
+* Ser atingido por lixo espacial: -100
+* Ser atigindo por asteroides pequenos: -10 pontos.
+* Ser atigindo por asteroides médios: -100 pontos.
+* Ser atigindo por asteroides grandes: -1000 pontos.
+## Eventos
+### Asteroides
+#### Destruindo asteroides
+* Para destruir lixo espacial: 1 tiro
+* Para destruir asteroide pequeno: 2 tiros
+* Para destruir asteroide médio: 3 tiros
+* Para destruir asteroides grande: 5 tiros
+#### Após destruir asteroides
+* Asteroide Grande: Gera 4 Asteroides médios ou um item.
+* Asteroides Médios: Gera 2 asteroides ou um item.
+* Asteroide Pequeno: Não gera nada.
 ## Como o jogo acaba? : 
 * O jogo encerra quando ultrapassar uma "linha de chegada" que determina o fim do cinturão de asteroides.
