@@ -21,7 +21,7 @@ function scene:show( event )
  
     if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)
-        local background = display.newImageRect("images/screens/titleScreen.png", 1920,1080)
+        local background = display.newImageRect("assets/screens/titleScreen.png", 1920,1080)
             background.x = display.contentCenterX
             background.y = display.contentCenterY
         local title = display.newText("Plus Ultra",display.contentCenterX,display.contentCenterY - 200,native.systemFont, 100 )
