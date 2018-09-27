@@ -72,6 +72,14 @@ function ship.new(mainGroup)
     function instance.getSpeed()
         return instance.speed
     end
+    function instance.createEdges(event)
+        if instance.ship.x < 0 then
+            instance.ship.x = 0
+        end
+        if instance.ship.x > display.contentWidth - 1 then
+            instance.ship.x = display.contentWidth - 1
+        end
+    end
     --Gamepad
     function instance.getGamepad()
         return instance.gamepad
@@ -102,13 +110,19 @@ function ship.new(mainGroup)
         instance.shipMoveX =  instance.speed
     end
      --[[
-    ]]--
-    
+         ]]--
+    instance.moveLeft():addEventListener("touch", instance.leftArrowtouch)
+    instance.moveRight():addEventListener ("touch", instance.rightArrowtouch)
+    instance.shoot():addEventListener("touch",instance.fireBallShoot)
+    Runtime:addEventListener("enterFrame", instance.moveShip)
+    Runtime:addEventListener("touch", instance.stopShip)
+    Runtime:addEventListener("enterFrame", instance.createEdges)
     -- Gamepad
     
     --Runtime:addEventListener("enterFrame", instance.moveShip)
     --Runtime:addEventListener("touch", instance.stopShip)
     return instance
 end
+
 
 return ship

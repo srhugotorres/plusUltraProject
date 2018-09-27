@@ -84,14 +84,6 @@ local function createAsteroid()
 		end
 	asteroidRandom:applyTorque( math.random( -6,6 ) )
 end
-local function createEdges(event)	
-    if ship.x < 0 then
-       ship.x = 0
-    end
-    if ship.x > display.contentWidth - 1 then
-       ship.x = display.contentWidth - 1
-    end
-end
 
 local function onCollision( event )
 
@@ -163,12 +155,6 @@ function scene:create( event )
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         --timer.performWithDelay( 500, asteroidGenerator, 0 )
-        ship.moveLeft():addEventListener("touch", ship.leftArrowtouch)
-        ship.moveRight():addEventListener ("touch", ship.rightArrowtouch)
-        ship.shoot():addEventListener("touch",ship.fireBallShoot)
-        Runtime:addEventListener("enterFrame", ship.moveShip)
-        Runtime:addEventListener("touch", ship.stopShip)
-        Runtime:addEventListener("enterFrame", createEdges)
         --Runtime:addEventListener( "collision", onCollision )
 
     end
