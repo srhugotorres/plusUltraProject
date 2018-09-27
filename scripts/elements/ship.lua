@@ -1,4 +1,4 @@
--- local newGamepad = require("scripts.elements.gamepad")
+local newGamepad = require("scripts.elements.gamepad")
 -- Físicas
 local physics = require("physics")
 physics.start()
@@ -19,7 +19,7 @@ function ship.new()
         instance.ship.rotation = - 90
         instance.ship.myName = "ship"
     physics.addBody(instance.ship, "static", {radius=50, isSensor=true});
-
+    instance.gamepad = newGamepad.new()
     -- Método
     function instance.singleShoot()
         instance.bullet = display.newImageRect(instance.bulletStyle,30,30)
@@ -67,6 +67,15 @@ function ship.new()
     function instance.getSpeed()
         return instance.speed
     end
+    function instance.getGamepad()
+        return instance.gamepad
+    end
+    function instance.moveLeft()
+        return instance.gamepad.getLeftArrow()
+    end
+    function instance.moveRight()
+        return instance.gamepad.getRightArrow()
+    end
     --[[
     function instance.stopShip(event)
         if event.phase == "ended" then
@@ -83,15 +92,9 @@ function ship.new()
         instance.ship.x = - instance.speed
     end
     ]]--
-    --[[
+    
     -- Gamepad
-    instance.gamepad = newGamepad.new(
-        instance.rightArrowtouch,
-        instance.leftArrowtouch,
-        instance.stopShip,
-        instance.moveShip
-    )
-    ]]--
+    
     --Runtime:addEventListener("enterFrame", instance.moveShip)
     --Runtime:addEventListener("touch", instance.stopShip)
     return instance

@@ -1,5 +1,5 @@
 local composer = require( "composer" )
-local newGamepad = require("scripts.elements.gamepad")
+
 local scene = composer.newScene()
 local newShip = require("scripts.elements.ship")
 local backGroup = display.newGroup()
@@ -74,6 +74,7 @@ local function createEdges(event)
 end
 
 -- Criando gamepad
+
 --[[
     ]]--
 local function stopShip(event)
@@ -98,7 +99,7 @@ function rightArrowtouch()
     local MoveX = ship.getMoveX() + ship.getSpeed()
     ship.setMoveX(MoveX)
 end
-local gamepad = newGamepad.new()
+
 --[[
 -- Asteroid
 local function createAsteroid()
@@ -235,8 +236,8 @@ function scene:create( event )
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         --timer.performWithDelay( 500, asteroidGenerator, 0 )
-        gamepad.getRightArrow():addEventListener ("touch", rightArrowtouch)
-        gamepad.getLeftArrow():addEventListener("touch", leftArrowtouch)
+        ship.moveLeft():addEventListener("touch", leftArrowtouch)
+        ship.moveRight():addEventListener ("touch", rightArrowtouch)
         --shootButton:addEventListener("touch",fireBallShoot)
         Runtime:addEventListener("enterFrame", moveShip)
         Runtime:addEventListener("touch", stopShip)
