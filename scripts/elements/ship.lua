@@ -1,3 +1,4 @@
+-- local newGamepad = require("scripts.elements.gamepad")
 -- Físicas
 local physics = require("physics")
 physics.start()
@@ -7,17 +8,19 @@ local ship = {}
 
 function ship.new()
     local instance = {}
+    -- Atributos
     instance.style = "assets/style/Contemporary/ship/ship.png"
-    instance.ship = display.newImageRect (instance.style,70,96)
-    instance.moveX = 0
-    instance.speed = 6
-    physics.addBody(instance.ship, "static", {radius=50, isSensor=true});
-    instance.ship.x = display.contentCenterX
-    instance.ship.y = (display.contentCenterY) * 1.65 
-    instance.ship.rotation = - 90
-    instance.ship.myName = "ship"
     instance.bulletStyle = "assets/style/Contemporary/ship/fireball.png"
-    --instance.printMyName()
+    instance.moveX = 0
+    instance.ship = display.newImageRect (instance.style,70,96)
+        instance.speed = 6
+        instance.ship.x = display.contentCenterX
+        instance.ship.y = (display.contentCenterY) * 1.65 
+        instance.ship.rotation = - 90
+        instance.ship.myName = "ship"
+    physics.addBody(instance.ship, "static", {radius=50, isSensor=true});
+
+    -- Método
     function instance.singleShoot()
         instance.bullet = display.newImageRect(instance.bulletStyle,30,30)
         physics.addBody(instance.bullet,"dynamic",{isSensor=true})
@@ -64,7 +67,33 @@ function ship.new()
     function instance.getSpeed()
         return instance.speed
     end
-
+    --[[
+    function instance.stopShip(event)
+        if event.phase == "ended" then
+            instance.moveX = 0
+        end
+    end
+    function instance.moveShip()
+        instance.ship.x = instance.ship.x + instance.moveX
+    end
+    function instance.leftArrowtouch()
+        instance.ship.x = instance.ship.x - instance.speed
+    end
+    function instance.rightArrowtouch()
+        instance.ship.x = - instance.speed
+    end
+    ]]--
+    --[[
+    -- Gamepad
+    instance.gamepad = newGamepad.new(
+        instance.rightArrowtouch,
+        instance.leftArrowtouch,
+        instance.stopShip,
+        instance.moveShip
+    )
+    ]]--
+    --Runtime:addEventListener("enterFrame", instance.moveShip)
+    --Runtime:addEventListener("touch", instance.stopShip)
     return instance
 end
 

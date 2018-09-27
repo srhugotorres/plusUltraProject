@@ -1,5 +1,5 @@
 local composer = require( "composer" )
- 
+local newGamepad = require("scripts.elements.gamepad")
 local scene = composer.newScene()
 local newShip = require("scripts.elements.ship")
 local backGroup = display.newGroup()
@@ -22,7 +22,7 @@ local speed = 6
 ]]--
 local asteroidsTable = {}
 
-local arrowAjust = 0.586510264
+--local arrowAjust = 0.586510264
 
 -- Funções Global
 function scrollSky(self,event)
@@ -62,8 +62,7 @@ local function fireBallShoot()
 end
 ]]--
 local ship = newShip.new()
-print(ship.getPositionX())
-print(ship.getMoveX())
+
 local function createEdges(event)	
     if ship.getPositionX() < 0 then
        ship.setPositionX(0)
@@ -75,6 +74,8 @@ local function createEdges(event)
 end
 
 -- Criando gamepad
+--[[
+    ]]--
 local function stopShip(event)
     if event.phase == "ended" then
         ship.setMoveX(0)
@@ -97,6 +98,7 @@ function rightArrowtouch()
     local MoveX = ship.getMoveX() + ship.getSpeed()
     ship.setMoveX(MoveX)
 end
+local gamepad = newGamepad.new()
 --[[
 -- Asteroid
 local function createAsteroid()
@@ -186,8 +188,6 @@ local function onCollision( event )
      end
 end
 
-
-
 local function asteroidGenerator()
     createAsteroid()
     for i = #asteroidsTable, 1, -1 do
@@ -214,35 +214,38 @@ function scene:create( event )
         background.speed = 0.5
         background.x = centerWidth
         background.y = centerHeight
-
+--[[
     local leftArrow = display.newImageRect(uiGroup,"assets/gamepad/arrow.png",80,80)
         leftArrow.x = (display.screenOriginX * arrowAjust)
         leftArrow.y = display.contentCenterY * 1.8
         leftArrow.rotation = -90
+
     local rightArrow = display.newImage(uiGroup,"assets/gamepad/arrow.png",80,80)
         rightArrow.x = 	-(display.screenOriginX * arrowAjust)
         rightArrow.y = display.contentCenterY * 1.8
         rightArrow.rotation = 90
-    local shootButton = display.newImageRect(uiGroup,"assets/gamepad/shootButton.png",80,80)
+        local shootButton = display.newImageRect(uiGroup,"assets/gamepad/shootButton.png",80,80)
         shootButton.x = display.screenOriginX +  1250
         shootButton.y = display.contentCenterY * 1.8
+        ]]--
+
     -- Núcleo do jogo
     function startGame()
 
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         --timer.performWithDelay( 500, asteroidGenerator, 0 )
-        rightArrow:addEventListener ("touch", rightArrowtouch)
-        leftArrow:addEventListener("touch", leftArrowtouch)
+        gamepad.getRightArrow():addEventListener ("touch", rightArrowtouch)
+        gamepad.getLeftArrow():addEventListener("touch", leftArrowtouch)
         --shootButton:addEventListener("touch",fireBallShoot)
         Runtime:addEventListener("enterFrame", moveShip)
         Runtime:addEventListener("touch", stopShip)
         Runtime:addEventListener("enterFrame", createEdges)
         --Runtime:addEventListener( "collision", onCollision )
-    
+
     end
-    
-    startGame()      
+
+    startGame()
 end
  
  
