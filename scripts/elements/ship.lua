@@ -6,14 +6,15 @@ physics.setGravity(0,0)
 
 local ship = {}
 
-function ship.new()
+function ship.new(mainGroup)
     local instance = {}
     -- Atributos
+    instance.group = mainGroup
     instance.style = "assets/style/Contemporary/ship/ship.png"
     instance.bulletStyle = "assets/style/Contemporary/ship/fireball.png"
-    instance.moveX = 0
+    instance.shipMoveX = 0
+    instance.speed = 6
     instance.ship = display.newImageRect (instance.style,70,96)
-        instance.speed = 6
         instance.ship.x = display.contentCenterX
         instance.ship.y = (display.contentCenterY) * 1.65 
         instance.ship.rotation = - 90
@@ -21,16 +22,19 @@ function ship.new()
     physics.addBody(instance.ship, "static", {radius=50, isSensor=true});
     instance.gamepad = newGamepad.new()
     -- Método
-    function instance.singleShoot()
-        instance.bullet = display.newImageRect(instance.bulletStyle,30,30)
+    function instance.fireBallShoot()
+        print("atirou")
+        instance.bullet = display.newImageRect(instance.group,instance.bulletStyle,30,30)
+        print(instance.bullet)
         physics.addBody(instance.bullet,"dynamic",{isSensor=true})
         instance.bullet.isBullet = true
         instance.bullet.myName = "bullet"
         instance.bullet.x = instance.ship.x
         instance.bullet.y = instance.ship.y
-        instance.bullet.toBack()
+        instance.bullet:toBack()
         transition.to(
-            instance.bullet,{
+            instance.bullet,
+            {
                 y = -40,
                 time = 500,
                 onComplete = function()
@@ -40,11 +44,12 @@ function ship.new()
         )
 
     end
+    
     function instance.getMoveX()
-        return instance.moveX
+        return instance.shipMoveX
     end
     function instance.setMoveX(moveX)
-        instance.moveX = moveX
+        instance.shipMoveX = moveX
     end
     function instance.getPositionX()
         return instance.ship.x
@@ -67,8 +72,13 @@ function ship.new()
     function instance.getSpeed()
         return instance.speed
     end
+    --Gamepad
     function instance.getGamepad()
         return instance.gamepad
+    end
+    function instance.shoot()
+        print("apertou o botão")
+        return instance.gamepad.getShootButton()
     end
     function instance.moveLeft()
         return instance.gamepad.getLeftArrow()
@@ -76,21 +86,22 @@ function ship.new()
     function instance.moveRight()
         return instance.gamepad.getRightArrow()
     end
-    --[[
     function instance.stopShip(event)
         if event.phase == "ended" then
-            instance.moveX = 0
+            instance.shipMoveX = 0
         end
     end
-    function instance.moveShip()
-        instance.ship.x = instance.ship.x + instance.moveX
+    function instance.moveShip(event)
+        instance.ship.x = instance.ship.x + instance.shipMoveX
     end
+   
     function instance.leftArrowtouch()
-        instance.ship.x = instance.ship.x - instance.speed
+        instance.shipMoveX = - instance.speed
     end
     function instance.rightArrowtouch()
-        instance.ship.x = - instance.speed
+        instance.shipMoveX =  instance.speed
     end
+     --[[
     ]]--
     
     -- Gamepad

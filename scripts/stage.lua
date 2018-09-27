@@ -1,5 +1,4 @@
 local composer = require( "composer" )
-
 local scene = composer.newScene()
 local newShip = require("scripts.elements.ship")
 local backGroup = display.newGroup()
@@ -15,14 +14,10 @@ physics.start()
 physics.setGravity(0,0)
 
 -- Variáveis global
---[[
-local shipMoveX = 0
-local ship 
-local speed = 6
-]]--
+
 local asteroidsTable = {}
 
---local arrowAjust = 0.586510264
+
 
 -- Funções Global
 function scrollSky(self,event)
@@ -33,35 +28,7 @@ function scrollSky(self,event)
     end
 end
 
---[[
-local function createShip()
-    ship = display.newImageRect (mainGroup,"assets/style/Contemporary/ship/ship.png",70,96)
-    physics.addBody(ship, "static", {radius=50, isSensor=true});
-    ship.x = display.contentCenterX
-    ship.y = (display.contentCenterY) * 1.65 
-    ship.rotation = -90
-    ship.myName = "ship"
-end
-local function fireBallShoot()
-    local fireBall = display.newImageRect(mainGroup,"assets/style/Contemporary/ship/fireball.png",30,30)
-    physics.addBody(fireBall,"dynamic",{isSensor=true})
-    fireBall.isBullet = true
-    fireBall.myName = "fireball"
-    fireBall.x = ship.x
-    fireBall.y = ship.y
-    fireBall:toBack()
-    transition.to(
-        fireBall,{
-            y=-40,
-            time=500,
-            onComplete = function() 
-                display.remove(fireBall)
-            end
-        }
-    )
-end
-]]--
-local ship = newShip.new()
+local ship = newShip.new(mainGroup)
 
 local function createEdges(event)	
     if ship.getPositionX() < 0 then
@@ -73,32 +40,6 @@ local function createEdges(event)
     end
 end
 
--- Criando gamepad
-
---[[
-    ]]--
-local function stopShip(event)
-    if event.phase == "ended" then
-        ship.setMoveX(0)
-    end
-end
-
-local function moveShip(event)
-    local newposition = ship.getPositionX() + ship.getMoveX()
-    ship.setPositionX(newposition)
-end
-
-
-function leftArrowtouch()
-    local moveX = ship.getMoveX() - ship.getSpeed()
-    ship.setMoveX(moveX)
-end
-
-
-function rightArrowtouch()
-    local MoveX = ship.getMoveX() + ship.getSpeed()
-    ship.setMoveX(MoveX)
-end
 
 --[[
 -- Asteroid
@@ -215,20 +156,6 @@ function scene:create( event )
         background.speed = 0.5
         background.x = centerWidth
         background.y = centerHeight
---[[
-    local leftArrow = display.newImageRect(uiGroup,"assets/gamepad/arrow.png",80,80)
-        leftArrow.x = (display.screenOriginX * arrowAjust)
-        leftArrow.y = display.contentCenterY * 1.8
-        leftArrow.rotation = -90
-
-    local rightArrow = display.newImage(uiGroup,"assets/gamepad/arrow.png",80,80)
-        rightArrow.x = 	-(display.screenOriginX * arrowAjust)
-        rightArrow.y = display.contentCenterY * 1.8
-        rightArrow.rotation = 90
-        local shootButton = display.newImageRect(uiGroup,"assets/gamepad/shootButton.png",80,80)
-        shootButton.x = display.screenOriginX +  1250
-        shootButton.y = display.contentCenterY * 1.8
-        ]]--
 
     -- Núcleo do jogo
     function startGame()
@@ -236,11 +163,11 @@ function scene:create( event )
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         --timer.performWithDelay( 500, asteroidGenerator, 0 )
-        ship.moveLeft():addEventListener("touch", leftArrowtouch)
-        ship.moveRight():addEventListener ("touch", rightArrowtouch)
-        --shootButton:addEventListener("touch",fireBallShoot)
-        Runtime:addEventListener("enterFrame", moveShip)
-        Runtime:addEventListener("touch", stopShip)
+        ship.moveLeft():addEventListener("touch", ship.leftArrowtouch)
+        ship.moveRight():addEventListener ("touch", ship.rightArrowtouch)
+        ship.shoot():addEventListener("touch",ship.fireBallShoot)
+        Runtime:addEventListener("enterFrame", ship.moveShip)
+        Runtime:addEventListener("touch", ship.stopShip)
         Runtime:addEventListener("enterFrame", createEdges)
         --Runtime:addEventListener( "collision", onCollision )
 

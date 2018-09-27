@@ -35,6 +35,9 @@ function gamepad.new()
     function instance.getRightArrow()
         return instance.rightArrow
     end
+    function instance.getShootButton()
+        return instance.shootButton
+    end
     return instance
 end
 
