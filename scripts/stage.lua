@@ -1,6 +1,7 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local newShip = require("scripts.elements.ship")
+local newAsteroid = require("scripts.elements.asteroid")
 local backGroup = display.newGroup()
 local mainGroup = display.newGroup()
 local uiGroup = display.newGroup()
@@ -40,6 +41,7 @@ local function createEdges(event)
     end
 end
 
+local asteroid = newAsteroid.new(mainGroup,asteroidsTable)
 
 --[[
 -- Asteroid
@@ -138,6 +140,7 @@ local function asteroidGenerator()
     end
 end
 ]]--
+
 function scene:create( event )
  
     local sceneGroup = self.view
@@ -151,7 +154,7 @@ function scene:create( event )
 
     -- Núcleo do jogo
     function startGame()
-
+        
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         --timer.performWithDelay( 500, asteroidGenerator, 0 )

@@ -14,7 +14,7 @@ function ship.new(mainGroup)
     instance.bulletStyle = "assets/style/Contemporary/ship/fireball.png"
     instance.shipMoveX = 0
     instance.speed = 6
-    instance.ship = display.newImageRect (instance.style,70,96)
+    instance.ship = display.newImageRect (mainGroup,instance.style,70,96)
         instance.ship.x = display.contentCenterX
         instance.ship.y = (display.contentCenterY) * 1.65 
         instance.ship.rotation = - 90
