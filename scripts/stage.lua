@@ -154,7 +154,7 @@ function scene:create( event )
 
     -- Núcleo do jogo
     function startGame()
-        
+
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         --timer.performWithDelay( 500, asteroidGenerator, 0 )
