@@ -8,6 +8,8 @@ local uiGroup = display.newGroup()
 local centerWidth = display.contentCenterX
 local centerHeight = display.contentCenterY
 
+-- Asteroid
+local newAsteroid = require("scripts.elements.asteroid")
 
 -- Físicas
 local physics = require("physics")
@@ -123,9 +125,10 @@ local function onCollision( event )
         end
      end
 end
+]]--
 
 local function asteroidGenerator()
-    createAsteroid()
+    newAsteroid.new(mainGroup,asteroidsTable)
     for i = #asteroidsTable, 1, -1 do
         local thisAsteroid = asteroidsTable[i]
  
@@ -139,7 +142,6 @@ local function asteroidGenerator()
         end
     end
 end
-]]--
 
 function scene:create( event )
  
@@ -157,7 +159,7 @@ function scene:create( event )
 
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
-        --timer.performWithDelay( 500, asteroidGenerator, 0 )
+        timer.performWithDelay( 500, asteroidGenerator, 0 )
         --Runtime:addEventListener( "collision", onCollision )
 
     end
