@@ -7,6 +7,8 @@ local mainGroup = display.newGroup()
 local uiGroup = display.newGroup()
 local centerWidth = display.contentCenterX
 local centerHeight = display.contentCenterY
+local stageBackGroundSound = audio.loadStream("assets/audio/backgroundsound.wav")
+local playStageBG = audio.play(stageBackGroundSound)
 
 -- Asteroid
 local newAsteroid = require("scripts.elements.asteroid")
@@ -53,6 +55,12 @@ function onCollision( event )
 
             died = true
             ship.getShip().alpha = 0
+            ship.setMyName(nil)
+            local shipDestroyed = audio.loadSound("assets/audio/shipDestroyed.wav")
+            audio.play(shipDestroyed)
+            audio.stop(playStageBG)
+            stageBackGroundSound = nil
+            playStageBG = nil 
             composer.gotoScene("scripts.gameover")
         --[[
             ]]--

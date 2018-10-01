@@ -19,6 +19,8 @@ function bullet.new(mainGroup,shipX,shipY)
             end
         }
     )
+    local shootSound = audio.loadSound("assets/audio/shoot.wav")
+    audio.play(shootSound)
     function instance.getBullet()
         return instance.bullet
     end

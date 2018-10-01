@@ -1,5 +1,6 @@
 local newGamepad = require("scripts.elements.gamepad")
 local newBullet = require("scripts.elements.bullet")
+
 -- Físicas
 local physics = require("physics")
 physics.start()
@@ -22,8 +23,13 @@ function ship.new(mainGroup)
     physics.addBody(instance.ship, "static", {radius=50, isSensor=true});
     instance.gamepad = newGamepad.new()
     -- Métodos
+    function instance.setMyName(name)
+        instance.ship.myName = name
+    end
     function instance.bullet()
-        newBullet.new(instance.group,instance.ship.x,instance.ship.y)
+        if instance.ship.alpha ~= 0 then
+            newBullet.new(instance.group,instance.ship.x,instance.ship.y)
+        end
     end
     function instance.getShip()
         return instance.ship
@@ -51,7 +57,9 @@ function ship.new(mainGroup)
         return instance.gamepad.getShootButton()
     end
     function instance.moveLeft()
-        return instance.gamepad.getLeftArrow()
+        if instance.ship.alpha ~= 0 then
+            return instance.gamepad.getLeftArrow()
+        end
     end
     function instance.moveRight()
         return instance.gamepad.getRightArrow()
@@ -71,7 +79,6 @@ function ship.new(mainGroup)
     function instance.rightArrowtouch()
         instance.shipMoveX =  instance.speed
     end
-
     instance.moveLeft():addEventListener("touch", instance.leftArrowtouch)
     instance.moveRight():addEventListener ("touch", instance.rightArrowtouch)
     instance.shoot():addEventListener("touch",instance.bullet)

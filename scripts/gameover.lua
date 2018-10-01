@@ -2,6 +2,8 @@ local composer = require( "composer" )
  
 local scene = composer.newScene()
 
+local gameOver = audio.loadStream("assets/audio/gameover.wav")
+local gameOverCH = audio.play(gameOver)
 
 
 function scene:create( event )
@@ -22,6 +24,7 @@ function scene:show( event )
         -- Code here runs when the scene is still off screen (but is about to come on screen)
         local gameOver = display.newText("Game Over",display.contentCenterX,display.contentCenterY,native.systemFont, 200 )
             gameOver:setFillColor( 0.82, 0.86, 1 )
+        
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
  
