@@ -18,7 +18,7 @@ function asteroid.new(mainGroup,asteroidsTable)
     physics.addBody(instance.asteroid,"dynamic",{radius = 48, bounce=0.8})
 
     local whereFrom = math.random(2)
-    print(whereFrom)
+    
     if ( whereFrom == 1 ) then
         instance.asteroid.x = math.random(display.contentCenterX + 10,display.contentCenterX + 800)
         instance.asteroid.y = display.contentCenterY  - 300
@@ -69,6 +69,8 @@ function asteroid.new(mainGroup,asteroidsTable)
     end
     ]]--
     instance.asteroid:applyTorque( math.random( -6,6 ) )
-
+    function instance.getMyName()
+        return instance.asteroid.myName
+    end
 end
 return asteroid 

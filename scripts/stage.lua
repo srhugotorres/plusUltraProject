@@ -33,99 +33,45 @@ end
 
 local ship = newShip.new(mainGroup)
 
-local function createEdges(event)	
-    if ship.getPositionX() < 0 then
-       ship.setPositionX(0)
-    end
-    if ship.getPositionX() > display.contentWidth - 1 then
-       local newposition = display.contentWidth - 1
-       ship.setPositionX(newposition)
-    end
-end
 
 local asteroid = newAsteroid.new(mainGroup,asteroidsTable)
 
---[[
--- Asteroid
-local function createAsteroid()
-    local asteroidRandom
-    local smallAsteroid = display.newImageRect(mainGroup,"assets/style/Contemporary/asteroids/small/c40007.png",64,64)
-        table.insert( asteroidsTable, smallAsteroid )
-        physics.addBody(smallAsteroid,"dynamic", { radius=22, bounce=0.8 })
-        smallAsteroid.myName = "smallAsteroid"
-    local mediumAsteroid = display.newImageRect(mainGroup,"assets/style/Contemporary/asteroids/medium/c40000.png", 120,120)
-        table.insert( asteroidsTable,mediumAsteroid )
-        physics.addBody(mediumAsteroid,"dynamic",{radius=33, bounce=0.8})
-        mediumAsteroid.myName = "mediumAsteroid"
-	local largeAsteroid = display.newImageRect(mainGroup,"assets/style/Contemporary/asteroids/large/c10015.png", 210, 130)
-        table.insert( asteroidsTable, largeAsteroid)
-        physics.addBody( largeAsteroid, "dynamic", { radius=48, bounce=0.8 } )
-        largeAsteroid.myName = "largeAsteroid"
-    local asteroidChooser = math.random(6)
-        if(asteroidChooser == 1 or asteroidChooser == 2 or asteroidChooser == 3 ) then
-            asteroidRandom = smallAsteroid
-        elseif(asteroidChooser == 4 or asteroidChooser == 5) then
-            asteroidRandom = mediumAsteroid
+function onCollision( event )
 
-        elseif(asteroidChooser == 6) then
-            asteroidRandom = largeAsteroid
-        end
-
-    local whereFrom = math.random(3)
-
-        if ( whereFrom == 1 ) then
-	        asteroidRandom.x = math.random(display.contentCenterX + 20,display.contentCenterX + 300)
-            asteroidRandom.y = display.contentCenterY  - 400
-            asteroidRandom:setLinearVelocity(0, 88)
-        elseif ( whereFrom == 2 ) then
-	        asteroidRandom.x = math.random(display.contentCenterX+ 30, display.contentCenterX + 500)
-            asteroidRandom.y = display.contentCenterY  - 400
-            asteroidRandom:setLinearVelocity(0, 88)
-        elseif ( whereFrom == 3 ) then
-	        asteroidRandom.x = math.random(display.contentCenterX + 50,display.contentCenterX + 1000)
-            asteroidRandom.y = display.contentCenterY  - 400
-            asteroidRandom:setLinearVelocity(0, 88)
-		end
-	asteroidRandom:applyTorque( math.random( -6,6 ) )
-end
-
-local function onCollision( event )
-
-    if ( event.phase == "began" ) then
+    if  event.phase == "began"  then
 
         local obj1 = event.object1
         local obj2 = event.object2
     end
 
-    if ( event.phase == "began" ) then
+    if  event.phase == "began"  then
 
         local obj1 = event.object1
         local obj2 = event.object2
+        if  obj1.myName == "ship" and  obj2.myName == "asteroid"
+            or obj1.myName == "asteroid" and  obj2.myName ==  "ship" then
 
-        if ( 
-            ( obj1.myName == "ship" and (
-                obj2.myName == "smallAsteroid" or obj2.myName == "mediumAsteroid" or obj2.myName == "largeAsteroid") ) 
-                or ( (obj1.myName == "smallAsteroid" or obj2.myName == "mediumAsteroid" or obj1.myName == "largeAsteroid") and obj2.myName == "ship" ) ) then
-                died = true
-                ship.alpha = 0
-                composer.gotoScene("scripts.gameover")
+            died = true
+            ship.getShip().alpha = 0
+            composer.gotoScene("scripts.gameover")
+        --[[
+            ]]--
+        elseif obj1.myName == "bullet" and  obj2.myName == "asteroid"
+        or obj1.myName == "asteroid" and  obj2.myName ==  "bullet"  then
 
-        elseif (obj1.myName == "fireball" and (
-            obj2.myName == "smallAsteroid" or obj2.myName == "mediumAsteroid" or obj2.myName == "largeAsteroid") )
-            or ((obj1.myName == "smallAsteroid" or obj2.myName == "mediumAsteroid" or obj1.myName == "largeAsteroid") and obj2.myName == "ship" ) then
-                display.remove( obj1 )
-                display.remove( obj2 )
- 
-                for i = #asteroidsTable, 1, -1 do
-                    if ( asteroidsTable[i] == obj1 or asteroidsTable[i] == obj2 ) then
-                        table.remove( asteroidsTable, i )
-                        break
-                    end
+            display.remove( obj1 )
+            display.remove( obj2 )
+            for i = #asteroidsTable, 1, -1 do
+                if ( asteroidsTable[i] == obj1 or asteroidsTable[i] == obj2 ) then
+                    table.remove( asteroidsTable, i )
+                    break
                 end
+            end
+
         end
      end
 end
-]]--
+
 
 local function asteroidGenerator()
     newAsteroid.new(mainGroup,asteroidsTable)
@@ -156,11 +102,11 @@ function scene:create( event )
 
     -- Núcleo do jogo
     function startGame()
-
+        
         background.enterFrame = scrollSky
         Runtime:addEventListener("enterFrame",background)
         timer.performWithDelay( 500, asteroidGenerator, 0 )
-        --Runtime:addEventListener( "collision", onCollision )
+        Runtime:addEventListener( "collision", onCollision )
 
     end
 
