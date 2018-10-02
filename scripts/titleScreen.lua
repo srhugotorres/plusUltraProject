@@ -1,8 +1,12 @@
 local composer = require( "composer" )
  
 local scene = composer.newScene()
-
+local titleBackGroundSound = audio.loadStream("assets/audio/titleScreen.mp3")
+local playTitleBG = audio.play(titleBackGroundSound)
 local function goToGame()
+    audio.stop(playTitleBG)
+    titleBackGroundSound = nil
+    playTitleBG = nil
     composer.gotoScene( "scripts.stage" )
 end
 function scene:create( event )

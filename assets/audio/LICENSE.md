@@ -38,4 +38,12 @@
 * Licença: CC0 1.0 Universal (CC0 1.0)
 Public Domain Dedication - https://creativecommons.org/publicdomain/zero/1.0/
 * Fonte: https://opengameart.org/content/victory
-* Nome do arquivo: 
+* Nome do arquivo: Victory.wav
+
+##### titleScreen.mp3
+
+* Nome: 8bit Adventure
+* Autor: CodeManu - https://opengameart.org/users/codemanu
+* Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
+* Fonte: https://opengameart.org/content/8bit-adventure
+* Nome do arquivo: Adventure.mp3
