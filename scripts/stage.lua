@@ -1,7 +1,6 @@
 local composer = require( "composer" )
 local scene = composer.newScene()
 local newShip = require("scripts.elements.ship")
-local newAsteroid = require("scripts.elements.asteroid")
 local backGroup = display.newGroup()
 local mainGroup = display.newGroup()
 local uiGroup = display.newGroup()
@@ -11,7 +10,7 @@ local stageBackGroundSound = audio.loadStream("assets/audio/backgroundsound.wav"
 local playStageBG = audio.play(stageBackGroundSound)
 
 -- Asteroid
-local newAsteroid = require("scripts.elements.asteroid")
+local newAsteroid = require("scripts.elements.spaceObject")
 
 -- Físicas
 local physics = require("physics")
@@ -20,7 +19,7 @@ physics.setGravity(0,0)
 
 -- Variáveis global
 
-local asteroidsTable = {}
+local spaceObjectTable = {}
 
 
 
@@ -36,7 +35,7 @@ end
 local ship = newShip.new(mainGroup)
 
 
-local asteroid = newAsteroid.new(mainGroup,asteroidsTable)
+
 
 function onCollision( event )
 
@@ -69,9 +68,11 @@ function onCollision( event )
 
             display.remove( obj1 )
             display.remove( obj2 )
-            for i = #asteroidsTable, 1, -1 do
-                if ( asteroidsTable[i] == obj1 or asteroidsTable[i] == obj2 ) then
-                    table.remove( asteroidsTable, i )
+            local asteroidDestroyed = audio.loadSound("assets/audio/asteroidDestroyed.wav")
+            audio.play(asteroidDestroyed)
+            for i = #spaceObjectTable, 1, -1 do
+                if ( spaceObjectTable[i] == obj1 or spaceObjectTable[i] == obj2 ) then
+                    table.remove( spaceObjectTable, i )
                     break
                 end
             end
@@ -82,9 +83,9 @@ end
 
 
 local function asteroidGenerator()
-    newAsteroid.new(mainGroup,asteroidsTable)
-    for i = #asteroidsTable, 1, -1 do
-        local thisAsteroid = asteroidsTable[i]
+    newAsteroid.createObjects(mainGroup,spaceObjectTable)
+    for i = #spaceObjectTable, 1, -1 do
+        local thisAsteroid = spaceObjectTable[i]
  
         if ( thisAsteroid.x < -300 or
              thisAsteroid.x > display.contentWidth + 100 or
@@ -92,7 +93,7 @@ local function asteroidGenerator()
              thisAsteroid.y > display.contentHeight + 100 )
         then
             display.remove( thisAsteroid )
-            table.remove( asteroidsTable, i )
+            table.remove( spaceObjectTable, i )
         end
     end
 end
