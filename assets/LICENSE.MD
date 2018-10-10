@@ -4,30 +4,20 @@
 ## Retro
 #### Ship
 
----
-* Nome: 
-* Autor: 
-* Licença: 
-* Fonte: 
----
-* Nome: 
-* Autor: 
-* Licença: 
-* Fonte: 
----
+* Nome: Space Ships
+* Autor: nareiK - https://opengameart.org/users/nareik
+* Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
+* Fonte: https://opengameart.org/content/space-ships-1
+* Nome do arquivo: 2.png
+
 #### FireBall
 
----
-* Nome: 
-* Autor: 
-* Licença: 
-* Fonte: 
----
-* Nome: 
-* Autor: 
-* Licença: 
-* Fonte: 
----
+* Nome: Fireballs
+* Autor: djantosh10 - https://opengameart.org/users/djantosh10
+* Licença: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication - https://creativecommons.org/publicdomain/zero/1.0/
+* Fonte: https://opengameart.org/content/fireballs
+* Nome do arquivo: New Piskel (11).png
+
 
 
 #### Item

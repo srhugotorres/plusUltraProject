@@ -1,7 +1,9 @@
+local bulletStyle = {}
+    bulletStyle["contemporary"] = "assets/style/Contemporary/ship/fireball.png"
 local bullet = {}
-function bullet.new(mainGroup,shipX,shipY)
+function bullet.new(mainGroup,style,shipX,shipY)
     local instance = {}
-    instance.bulletStyle = "assets/style/Contemporary/ship/fireball.png"
+    instance.bulletStyle = bulletStyle[style]
     instance.bullet = display.newImageRect(mainGroup,instance.bulletStyle,30,30)
     physics.addBody(instance.bullet,"dynamic",{isSensor=true})
     instance.bullet.isBullet = true

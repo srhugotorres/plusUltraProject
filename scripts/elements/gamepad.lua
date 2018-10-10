@@ -17,18 +17,10 @@ function gamepad.new()
     instance.shootButton = display.newImageRect(instance.shoot,80,80)
     instance.shootButton.x = display.screenOriginX +  1250
     instance.shootButton.y = display.contentCenterY * 1.8
-    --[[
-    -- arrowTouch
-    instance.rightArrowTouch = rightArrowtouch
-    instance.leftArrowTouch = leftArrowtouch
-    ]]--
     --
     instance.stopShip = stopShip
     instance.moveShip = moveShip
-    --
-    --instance.leftArrow:addEventListener ("touch", instance.leftArrowTouch)
-    --instance.rightArrow:addEventListener ("touch", instance.rightArrowTouch)
-   
+
     function instance.getLeftArrow()
         return instance.leftArrow
     end

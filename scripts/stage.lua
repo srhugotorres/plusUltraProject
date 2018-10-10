@@ -1,128 +1,51 @@
 local composer = require( "composer" )
+ 
 local scene = composer.newScene()
-local newShip = require("scripts.elements.ship")
+ 
+-- -----------------------------------------------------------------------------------
+-- Code outside of the scene event functions below will only be executed ONCE unless
+-- the scene is removed entirely (not recycled) via "composer.removeScene()"
+-- -----------------------------------------------------------------------------------
+-- Group 
 local backGroup = display.newGroup()
 local mainGroup = display.newGroup()
 local uiGroup = display.newGroup()
-local centerWidth = display.contentCenterX
-local centerHeight = display.contentCenterY
-local stageBackGroundSound = audio.loadStream("assets/audio/backgroundsound.wav")
-local playStageBG = audio.play(stageBackGroundSound)
 
--- Asteroid
-local newAsteroid = require("scripts.elements.spaceObject")
+-- require
+local background = require "scripts.background"
+local _newGamepad = require "scripts.elements.gamepad"
+local newShip = require "scripts.elements.ship"
+local controller = require "scripts.controllerInterface"
+local objectsGenerator = require "scripts.objectsGenerator"
+local collision = require "scripts.collision"
 
--- Físicas
-local physics = require("physics")
-physics.start()
-physics.setGravity(0,0)
-
--- Variáveis global
-
-local spaceObjectTable = {}
-
-
-
--- Funções Global
-function scrollSky(self,event)
-    if self.y > 800 then
-        self.y = 0.1
-    else
-        self.y = self.y + self.speed
-    end
-end
-
-local ship = newShip.new(mainGroup)
-
-
-
-
-function onCollision( event )
-
-    if  event.phase == "began"  then
-
-        local obj1 = event.object1
-        local obj2 = event.object2
-    end
-
-    if  event.phase == "began"  then
-
-        local obj1 = event.object1
-        local obj2 = event.object2
-        if  obj1.myName == "ship" and  obj2.myName == "asteroid"
-            or obj1.myName == "asteroid" and  obj2.myName ==  "ship" then
-
-            died = true
-            ship.getShip().alpha = 0
-            ship.setMyName(nil)
-            local shipDestroyed = audio.loadSound("assets/audio/shipDestroyed.wav")
-            audio.play(shipDestroyed)
-            audio.stop(playStageBG)
-            stageBackGroundSound = nil
-            playStageBG = nil 
-            composer.gotoScene("scripts.gameover")
-        --[[
-            ]]--
-        elseif obj1.myName == "bullet" and  obj2.myName == "asteroid"
-        or obj1.myName == "asteroid" and  obj2.myName ==  "bullet"  then
-
-            display.remove( obj1 )
-            display.remove( obj2 )
-            local asteroidDestroyed = audio.loadSound("assets/audio/asteroidDestroyed.wav")
-            audio.play(asteroidDestroyed)
-            for i = #spaceObjectTable, 1, -1 do
-                if ( spaceObjectTable[i] == obj1 or spaceObjectTable[i] == obj2 ) then
-                    table.remove( spaceObjectTable, i )
-                    break
-                end
-            end
-
-        end
-     end
-end
-
-
-local function asteroidGenerator()
-    newAsteroid.createObjects(mainGroup,spaceObjectTable)
-    for i = #spaceObjectTable, 1, -1 do
-        local thisAsteroid = spaceObjectTable[i]
  
-        if ( thisAsteroid.x < -300 or
-             thisAsteroid.x > display.contentWidth + 100 or
-             thisAsteroid.y < -300 or
-             thisAsteroid.y > display.contentHeight + 100 )
-        then
-            display.remove( thisAsteroid )
-            table.remove( spaceObjectTable, i )
-        end
-    end
-end
-
+-- -----------------------------------------------------------------------------------
+-- Scene event functions
+-- -----------------------------------------------------------------------------------
+ 
+-- create()
 function scene:create( event )
- 
+
     local sceneGroup = self.view
+    -- Code here runs when the scene is first created but has not yet appeared on screen
+    background.new(
+        backGroup,
+        "contemporary",
+        2048,
+        2732
+    )
+    local gamepad = _newGamepad.new()
+    local ship = newShip.new(mainGroup, "contemporary")
 
-    -- Background 
-    local background = display.newImageRect(backGroup,"assets/style/Contemporary/background/spacebackground.png",2732,2048 )
-        background.rotation = -90
-        background.speed = 0.5
-        background.x = centerWidth
-        background.y = centerHeight
+    controller.runGamepad(gamepad,ship)
 
-    -- Núcleo do jogo
-    function startGame()
-        
-        background.enterFrame = scrollSky
-        Runtime:addEventListener("enterFrame",background)
-        timer.performWithDelay( 500, asteroidGenerator, 0 )
-        Runtime:addEventListener( "collision", onCollision )
+    objectsGenerator.run(mainGroup)
 
-    end
+    collision.run(objectsGenerator.getSpaceObjectTable(),ship)
 
-    startGame()
 end
- 
- 
+
 -- show()
 function scene:show( event )
  
