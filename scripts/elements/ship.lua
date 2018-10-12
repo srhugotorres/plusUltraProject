@@ -11,31 +11,31 @@ local shootName = "bullet"
 local ship = {}
 
 function ship.new(mainGroup,style)
-    local instance = {}
+    local group = mainGroup
+    local styleShip = shipStyle[style]
+    local instance = display.newImageRect(mainGroup,styleShip,70,96)
     -- Atributos
-    instance.group = mainGroup
-    instance.style = shipStyle[style]
-    
+
     instance.shipMoveX = 0
     instance.speed = 6
-    instance.ship = display.newImageRect(mainGroup,instance.style,70,96)
-        instance.ship.x = display.contentCenterX
-        instance.ship.y = (display.contentCenterY) * 1.65 
-        instance.ship.rotation = - 90
-        instance.ship.myName = "ship"
-    physics.addBody(instance.ship, "static", {radius=50, isSensor=true});
+    instance.x = display.contentCenterX
+    instance.y = (display.contentCenterY) * 1.65 
+    instance.rotation = - 90
+    instance.myName = "ship"
+
+    physics.addBody(instance, "static", {radius=50, isSensor=true});
 
     -- Métodos
     function instance.setMyName(name)
-        instance.ship.myName = name
+        instance.myName = name
     end
     function instance.bullet()
-        if instance.ship.alpha ~= 0 then
-            newBullet.new(instance.group,style,instance.ship.x,instance.ship.y)
+        if instance.alpha ~= 0 then
+            newBullet.new(group,style,instance.x,instance.y)
         end
     end
     function instance.getShip()
-        return instance.ship
+        return instance
     end
     function instance.getMoveX()
         return instance.shipMoveX
@@ -44,11 +44,11 @@ function ship.new(mainGroup,style)
         instance.shipMoveX = moveX
     end
     function instance.createEdges(event)
-        if instance.ship.x < 0 then
-            instance.ship.x = 0
+        if instance.x < 0 then
+            instance.x = 0
         end
-        if instance.ship.x > display.contentWidth - 1 then
-            instance.ship.x = display.contentWidth - 1
+        if instance.x > display.contentWidth - 1 then
+            instance.x = display.contentWidth - 1
         end
     end
 
@@ -58,7 +58,7 @@ function ship.new(mainGroup,style)
         end
     end
     function instance.moveShip(event)
-        instance.ship.x = instance.ship.x + instance.shipMoveX
+        instance.x = instance.x + instance.shipMoveX
     end
 
     function instance.moveLeft()
@@ -68,9 +68,19 @@ function ship.new(mainGroup,style)
         instance.shipMoveX =  instance.speed
     end
     function instance.destroyShip()
-        instance.ship.alpha = 0
-        instance.ship.myName = nil
+        instance.alpha = 0
+        instance.myName = nil
     end
+    function instance.onCollision(self,event)
+        if event.phase == "began" then
+            if event.target.myName == "ship" and event.other.myName == "asteroid" then
+                instance.destroyShip()
+            end
+        end
+    end
+
+    instance.collision = instance.onCollision
+    instance:addEventListener( "collision", instance )
     return instance
 end
 

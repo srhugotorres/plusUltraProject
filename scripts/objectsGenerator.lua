@@ -6,14 +6,25 @@ local mainGroupLocal
 function objectsGenerator.generate()
     newAsteroid.createObjects(mainGroupLocal,spaceObjectTable,"contemporary")
     for i = #spaceObjectTable, 1, -1 do
-        local thisAsteroid = spaceObjectTable[i]
-        if ( thisAsteroid.x < -300 or
-        thisAsteroid.x > display.contentWidth + 100 or
-        thisAsteroid.y < -300 or
-        thisAsteroid.y > display.contentHeight + 100 )
-        then
-            display.remove( thisAsteroid )
-            table.remove( spaceObjectTable, i )
+
+        local thisObject = spaceObjectTable[i]
+        if thisObject.x ~= nil and thisObject.y ~= nil then
+            if ( thisObject.x < -300 or
+            thisObject.x > display.contentWidth + 100 or
+            thisObject.y < -300 or
+            thisObject.y > display.contentHeight + 100 )
+            then
+                display.remove(thisObject.object)
+                thisObject.myName = nil
+
+                table.remove( spaceObjectTable, i )
+            end
+        else
+            -- Cancela a trajetória do asteroide
+            -- Significa que o asteroide foi destruido
+            display.remove(thisObject)
+            thisObject.myName = nil
+            table.remove(spaceObjectTable,i)
         end
     end
 end
@@ -23,7 +34,7 @@ function objectsGenerator.run(mainGroup)
     timer.performWithDelay( 500, objectsGenerator.generate, 0 )
 end
 
-function objectsGenerator.getSpaceObjectTable()
+function objectsGenerator.getTable()
     return spaceObjectTable
 end
 

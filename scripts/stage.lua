@@ -17,7 +17,7 @@ local _newGamepad = require "scripts.elements.gamepad"
 local newShip = require "scripts.elements.ship"
 local controller = require "scripts.controllerInterface"
 local objectsGenerator = require "scripts.objectsGenerator"
-local collision = require "scripts.collision"
+
 
  
 -- -----------------------------------------------------------------------------------
@@ -42,7 +42,6 @@ function scene:create( event )
 
     objectsGenerator.run(mainGroup)
 
-    collision.run(objectsGenerator.getSpaceObjectTable(),ship)
 
 end
 
