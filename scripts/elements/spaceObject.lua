@@ -1,3 +1,4 @@
+local player = require "scripts.playerCreator"
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
@@ -47,6 +48,7 @@ function spaceObject.new(
                 if instance.resistance ~= 0 then
                     instance.resistance = instance.resistance - event.other.efficiency
                 else
+                    player.addScore(instance.reward)
                     display.remove(event.target)
                     for i = #objectsTable, 1, -1 do
                         if objectsTable[i] == event.target then

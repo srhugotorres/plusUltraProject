@@ -1,3 +1,4 @@
+local player = require "scripts.playerCreator"
 local newGamepad = require("scripts.elements.gamepad")
 local newBullet = require("scripts.elements.bullet")
 local shipStyle = {}
@@ -74,6 +75,7 @@ function ship.new(mainGroup,style)
     function instance.onCollision(self,event)
         if event.phase == "began" then
             if event.target.myName == "ship" and event.other.myName == "asteroid" then
+                player.subScore(event.other.reward)
                 instance.destroyShip()
             end
         end
