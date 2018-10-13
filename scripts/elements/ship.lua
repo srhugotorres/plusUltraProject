@@ -29,7 +29,7 @@ function ship.new(mainGroup,style,controller)
     instance.y = (display.contentCenterY) * 1.65 
     instance.rotation = - 90
     instance.myName = "ship" 
-    physics.addBody(instance, "static", {radius=50, isSensor=true});
+    physics.addBody(instance, "static", {radius=20, isSensor=true});
     -- Métodos
 
     function instance.bullet()
@@ -77,7 +77,7 @@ function ship.new(mainGroup,style,controller)
     end
     function instance.onCollision(self,event)
         if event.phase == "began" then
-            if event.target.myName == "ship" and event.other.myName == "asteroid" then
+            if event.target.myName == "ship" and event.other.myName == "spaceObject" then
                 player.subScore(event.other.reward)
                 instance.destroyShip()
             end

@@ -36,7 +36,7 @@ function bullet.new(mainGroup,style,shipX,shipY)
 ]]--
     function instance.onCollision(self,event)
         if event.phase == "began" then
-            if event.target.myName == "bullet" and event.other.myName == "asteroid" then
+            if event.target.myName == "bullet" and event.other.myName == "spaceObject" then
                 --instance.destroy()
                 display.remove(event.target)
             end
