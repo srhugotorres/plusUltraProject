@@ -1,8 +1,8 @@
-local gamepad = {}
-function gamepad.new()
+local gamepadtouch = {}
+function gamepadtouch.new()
     local instance ={}
-    instance.arrow = "assets/gamepad/arrow.png"
-    instance.shoot = "assets/gamepad/shootButton.png"
+    instance.arrow = "assets/gamepadtouch/arrow.png"
+    instance.shoot = "assets/gamepadtouch/shootButton.png"
     -- leftArrow
     instance.leftArrow = display.newImageRect(instance.arrow,80,80)
     instance.leftArrow.x = (display.screenOriginX * 0.586510264)
@@ -33,4 +33,4 @@ function gamepad.new()
     return instance
 end
 
-return gamepad
+return gamepadtouch

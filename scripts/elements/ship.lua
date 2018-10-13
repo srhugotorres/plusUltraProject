@@ -1,5 +1,5 @@
 local player = require "scripts.playerCreator"
-local newGamepad = require("scripts.elements.gamepad")
+local newGamepad = require("scripts.elements.gamepadtouch")
 local newBullet = require("scripts.elements.bullet")
 local shipStyle = {}
 shipStyle["contemporary"] = "assets/style/Contemporary/ship/ship.png"
@@ -11,10 +11,16 @@ physics.setGravity(0,0)
 local shootName = "bullet"
 local ship = {}
 
-function ship.new(mainGroup,style)
+function ship.new(mainGroup,style,controller)
     local group = mainGroup
     local styleShip = shipStyle[style]
     local instance = display.newImageRect(mainGroup,styleShip,70,96)
+    local eventPhase
+    if controller == "keyboard" then
+        eventPhase = "up"
+    elseif controller == "gamepadtouch" then
+        eventPhase = "ended"
+    end
     -- Atributos
 
     instance.shipMoveX = 0
@@ -22,14 +28,10 @@ function ship.new(mainGroup,style)
     instance.x = display.contentCenterX
     instance.y = (display.contentCenterY) * 1.65 
     instance.rotation = - 90
-    instance.myName = "ship"
-
+    instance.myName = "ship" 
     physics.addBody(instance, "static", {radius=50, isSensor=true});
-
     -- Métodos
-    function instance.setMyName(name)
-        instance.myName = name
-    end
+
     function instance.bullet()
         if instance.alpha ~= 0 then
             newBullet.new(group,style,instance.x,instance.y)
@@ -54,7 +56,7 @@ function ship.new(mainGroup,style)
     end
 
     function instance.stopShip(event)
-        if event.phase == "ended" then
+        if event.phase == eventPhase then
             instance.shipMoveX = 0
         end
     end
@@ -68,6 +70,7 @@ function ship.new(mainGroup,style)
     function instance.moveRight()
         instance.shipMoveX =  instance.speed
     end
+
     function instance.destroyShip()
         instance.alpha = 0
         instance.myName = nil

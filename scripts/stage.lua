@@ -13,7 +13,6 @@ local uiGroup = display.newGroup()
 
 -- require
 local background = require "scripts.background"
-local _newGamepad = require "scripts.elements.gamepad"
 local newShip = require "scripts.elements.ship"
 local controller = require "scripts.controllerInterface"
 local objectsGenerator = require "scripts.objectsGenerator"
@@ -35,10 +34,9 @@ function scene:create( event )
         2048,
         2732
     )
-    local gamepad = _newGamepad.new()
-    local ship = newShip.new(mainGroup, "contemporary")
 
-    controller.runGamepad(gamepad,ship)
+    local ship = newShip.new(mainGroup, "contemporary","keyboard")
+    controller.runKeyboard(ship)
 
     objectsGenerator.run(mainGroup)
 

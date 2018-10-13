@@ -1,38 +1,36 @@
 
+local newGamepadTouch = require "scripts.elements.gamepadtouch"
+local newKeyboard = require "scripts.keyboard"
+
 local controller = {}
-function controller.new(
-    ship,
-    commandLeft,
-    commandRight,
-    commandShoot,
-    commandEvent
-)
-    commandLeft():addEventListener(commandEvent,ship.moveLeft)
-    commandRight():addEventListener(commandEvent,ship.moveRight)
-    commandShoot():addEventListener(commandEvent,ship.bullet)
-    Runtime:addEventListener(commandEvent, ship.stopShip)
+
+function controller.runGamepadTouch(ship)
+    local gamepad = newGamepadTouch.new()
+    gamepad.getLeftArrow():addEventListener("touch",ship.moveLeft)
+    gamepad.getRightArrow():addEventListener("touch",ship.moveRight)
+    gamepad.getShootButton():addEventListener("touch",ship.bullet)
+    Runtime:addEventListener("touch", ship.stopShip)
     Runtime:addEventListener("enterFrame", ship.moveShip)
     Runtime:addEventListener("enterFrame", ship.createEdges)
 end
-function controller.runGamepad(gamepad,ship)
-    controller.new(
-        ship,
-        gamepad.getLeftArrow,
-        gamepad.getRightArrow,
-        gamepad.getShootButton,
-        "touch"
-    )
-end
 --[[
-function controller.runKeyboard(ship,event)
-        controller.new(
-            event.keyName == "left",
-            event.keyName == "right",
-            event.keyName == "z",
-            ship,
-            "key"
-        )
-        
-    end
+function controller.runKeyboard(keyboard,ship)
+    keyboard.run(ship)
+end
+function controller.run(ship)
+    local gamepad  =  newGamepad.new()
+    local keyboard =  newKeyboard
+
+    --controller.runGamepad(gamepad,ship)
+    controller.runKeyboard(keyboard,ship)
+end
 ]]--
+function controller.runKeyboard(ship)
+    newKeyboard.new(ship)
+    --Runtime:addEventListener("key",newKeyboard.run)
+    Runtime:addEventListener("key",newKeyboard.run)
+    timer.performWithDelay( 5, function()  Runtime:addEventListener("key", ship.stopShip) end )
+    Runtime:addEventListener("enterFrame", ship.moveShip)
+    Runtime:addEventListener("enterFrame", ship.createEdges)
+end
 return controller
