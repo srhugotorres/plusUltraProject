@@ -1,6 +1,6 @@
 local newPlayer = require "scripts.elements.player"
 local playerCreator = {}
-local player = newPlayer.new("jogador1")
+local player = newPlayer.new("Midoriya")
 function playerCreator.getPlayer()
     return player
 end
@@ -22,5 +22,11 @@ function playerCreator.subScore(score)
         print("sem score")
         playerCreator.showScore()
     end
+end
+function playerCreator.getName()
+    return player.name
+end
+function playerCreator.getScore()
+    return player.score
 end
 return playerCreator

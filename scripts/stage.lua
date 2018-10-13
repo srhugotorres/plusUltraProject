@@ -16,7 +16,7 @@ local background = require "scripts.background"
 local newShip = require "scripts.elements.ship"
 local controller = require "scripts.controllerInterface"
 local objectsGenerator = require "scripts.objectsGenerator"
-
+local stageUI = require "scripts.stageUI"
 
  
 -- -----------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ function scene:create( event )
         2048,
         2732
     )
-
+    stageUI.run(uiGroup)
     local ship = newShip.new(mainGroup, "contemporary","keyboard")
     controller.runKeyboard(ship)
 
