@@ -10,7 +10,7 @@ function keyboard.run(event)
     elseif event.keyName == "right" then
         shipLocal.moveRight()
         return true
-    elseif event.keyName == "z" then
+    elseif event.keyName == "z" or event.keyName == "up"  then
         shipLocal.bullet()
         return true
     end

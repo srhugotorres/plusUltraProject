@@ -1,6 +1,6 @@
 --
 local bulletStyle = {}
-    bulletStyle["contemporary"] = "assets/style/Contemporary/ship/fireball.png"
+    bulletStyle["contemporary"] = "assets/style/contemporary/ship/fireball.png"
 --
 local physics = require("physics")
 physics.start()

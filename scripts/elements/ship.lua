@@ -2,15 +2,30 @@ local player = require "scripts.playerCreator"
 local newGamepad = require("scripts.elements.gamepadtouch")
 local newBullet = require("scripts.elements.bullet")
 local shipStyle = {}
-shipStyle["contemporary"] = "assets/style/Contemporary/ship/ship.png"
-shipStyle["retro"] ="assets/style/Retro/ship/2.png"
+shipStyle["contemporary"] = "assets/style/contemporary/ship/ship.png"
+
 -- Físicas
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
 local shootName = "bullet"
 local ship = {}
-
+--
+--
+local explosionSheetData = {
+    width =250,
+    height= 120,
+    numFrames = 12,
+    sheetContentWidth = 768,
+    sheetContentHeight = 512
+}
+local explosionSheet = graphics.newImageSheet("assets/style/contemporary/spaceObjects/explosion/explosion.png", explosionSheetData)
+local explosionSequenceData = {
+    {name="explosion", start = 1, count = 5, time = 200, loopCount = 1}
+}
+local explosion = {}
+local explosionCounter = 0
+--
 function ship.new(mainGroup,style,controller)
     local group = mainGroup
     local styleShip = shipStyle[style]
@@ -26,7 +41,7 @@ function ship.new(mainGroup,style,controller)
     instance.shipMoveX = 0
     instance.speed = 6
     instance.x = display.contentCenterX
-    instance.y = (display.contentCenterY) * 1.65 
+    instance.y = (display.contentCenterY) * 1.60
     instance.rotation = - 90
     instance.myName = "ship" 
     physics.addBody(instance, "static", {radius=20, isSensor=true});
@@ -79,7 +94,20 @@ function ship.new(mainGroup,style,controller)
         if event.phase == "began" then
             if event.target.myName == "ship" and event.other.myName == "spaceObject" then
                 player.subScore(event.other.reward)
+                player.setFinalScore()
                 instance.destroyShip()
+                explosion = display.newSprite(explosionSheet,explosionSequenceData)
+                    explosion.x = instance.x
+                    explosion.y = instance.y
+                explosion:play()
+                local function removeExplosion()
+                    if explosion ~= nil then
+                        display.remove(explosion)
+                    end
+                end
+                local shipDestroyed = audio.loadSound("assets/audio/shipDestroyed.wav")
+                audio.play(shipDestroyed)
+                timer.performWithDelay(255, removeExplosion,1)
             end
         end
     end

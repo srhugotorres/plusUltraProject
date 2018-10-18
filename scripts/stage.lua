@@ -1,7 +1,7 @@
 local composer = require( "composer" )
- 
+
 local scene = composer.newScene()
- 
+
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
@@ -17,12 +17,27 @@ local newShip = require "scripts.elements.ship"
 local controller = require "scripts.controllerInterface"
 local objectsGenerator = require "scripts.objectsGenerator"
 local stageUI = require "scripts.stageUI"
+-- sound
 
- 
+local stageBackGroundSound = audio.loadStream("assets/audio/backgroundsound.wav")
+local playStageBG = audio.play(stageBackGroundSound)
+
+local function onCollision(event)
+    if event.phase == "began" then
+        if event.target.myName == "ship" and event.other.myName == "spaceObject" then
+            print("teste")
+            audio.stop(playStageBG)
+            stageBackGroundSound = nil
+            playStageBG = nil 
+            composer.gotoScene("scripts.gameover")
+        end
+    end
+end
+
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
- 
+
 -- create()
 function scene:create( event )
 
@@ -35,12 +50,12 @@ function scene:create( event )
         2732
     )
     stageUI.run(uiGroup)
-    local ship = newShip.new(mainGroup, "contemporary","keyboard")
-    controller.runKeyboard(ship)
+    local ship = newShip.new(mainGroup, "contemporary","gamepadtouch")
+    controller.runGamepadTouch(ship)
+    --controller.runKeyboard(ship)
 
     objectsGenerator.run(mainGroup)
-
-
+    ship.getShip():addEventListener( "collision", onCollision )
 end
 
 -- show()

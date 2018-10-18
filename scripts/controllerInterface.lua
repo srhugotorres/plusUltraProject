@@ -13,18 +13,6 @@ function controller.runGamepadTouch(ship)
     Runtime:addEventListener("enterFrame", ship.moveShip)
     Runtime:addEventListener("enterFrame", ship.createEdges)
 end
---[[
-function controller.runKeyboard(keyboard,ship)
-    keyboard.run(ship)
-end
-function controller.run(ship)
-    local gamepad  =  newGamepad.new()
-    local keyboard =  newKeyboard
-
-    --controller.runGamepad(gamepad,ship)
-    controller.runKeyboard(keyboard,ship)
-end
-]]--
 function controller.runKeyboard(ship)
     newKeyboard.new(ship)
     --Runtime:addEventListener("key",newKeyboard.run)

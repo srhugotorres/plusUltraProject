@@ -1,6 +1,6 @@
 local newPlayer = require "scripts.elements.player"
 local playerCreator = {}
-local player = newPlayer.new("Midoriya")
+local player = newPlayer.new("Player Name")
 function playerCreator.getPlayer()
     return player
 end
@@ -16,7 +16,11 @@ function playerCreator.addScore(score)
 end
 function playerCreator.subScore(score)
     if player.score ~= 0 then
-        player.score = player.score - score
+        if (player.score - score < 0) then
+            player.score = 0
+        else
+            player.score = player.score - score
+        end
         playerCreator.showScore()
     else
         print("sem score")
@@ -28,5 +32,8 @@ function playerCreator.getName()
 end
 function playerCreator.getScore()
     return player.score
+end
+function playerCreator.setFinalScore()
+    player.finalScore = player.score
 end
 return playerCreator

@@ -1,7 +1,7 @@
 local centerWidth = display.contentCenterX
 local centerHeight = display.contentCenterY
 local backgroundStyle = {}
-    backgroundStyle["contemporary"] = "assets/style/Contemporary/background/spacebackground.png"
+    backgroundStyle["contemporary"] = "assets/style/contemporary/background/spacebackground.png"
 local background = {}
 function background.new(backGroup,style,sizeX,sizeY)
     local instance = {}

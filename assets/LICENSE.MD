@@ -1,26 +1,15 @@
 # Images License
 
 # Styles
-## Retro
-#### Ship
-
-* Nome: Space Ships
-* Autor: nareiK - https://opengameart.org/users/nareik
-* Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
-* Fonte: https://opengameart.org/content/space-ships-1
-* Nome do arquivo: 2.png
-
-#### FireBall
-
-* Nome: Fireballs
-* Autor: djantosh10 - https://opengameart.org/users/djantosh10
-* Licença: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication - https://creativecommons.org/publicdomain/zero/1.0/
-* Fonte: https://opengameart.org/content/fireballs
-* Nome do arquivo: New Piskel (11).png
-
-
 ## Contemporary
 
+* Nome: Starfield Alpha 4K
+* Autor: darklighter_designs - https://opengameart.org/users/darklighterdesigns
+* Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
+* Fonte: https://opengameart.org/content/starfield-alpha-4k
+* Nome original do arquivo: starfield_alpha.psd
+
+#### Background
 
 #### Ship
 
@@ -67,6 +56,12 @@
 * Licença: Attribution 4.0 International (CC BY 4.0) - https://creativecommons.org/licenses/by/4.0/
 * Fonte: http://millionthvector.blogspot.com/p/free-sprites.html; http://1.bp.blogspot.com/-GalEvZwCtFM/Uhue_F7oDHI/AAAAAAAAA3M/5OB7QYDI8Uk/s1600/RD3.png
 
+#### Explosion
+* Name: Fire Spell Explosion
+* Autor: Clint Bellanger - https://opengameart.org/users/clint-bellanger
+* Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
+* Fonte: https://opengameart.org/content/fire-spell-explosion
+* Nome do arquivo: explosion.png
 
 # Assets
 

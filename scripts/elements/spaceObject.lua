@@ -2,19 +2,32 @@ local player = require "scripts.playerCreator"
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
--- style
+-- 
+local explosionSheetData = {
+    width =250,
+    height= 120,
+    numFrames = 12,
+    sheetContentWidth = 768,
+    sheetContentHeight = 512
+}
+local explosionSheet = graphics.newImageSheet("assets/style/contemporary/spaceObjects/explosion/explosion.png", explosionSheetData)
+local explosionSequenceData = {
+    {name="explosion", start = 1, count = 5, time = 200, loopCount = 1}
+}
+local explosion = {}
+local explosionCounter = 0
 local smallAsteroidStyle = {}
-    smallAsteroidStyle["contemporary"] = "assets/style/Contemporary/spaceObjects/smallAsteroid/c40007.png"
+    smallAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/smallAsteroid/c40007.png"
 local mediumAsteroidStyle = {}
-    mediumAsteroidStyle["contemporary"] = "assets/style/Contemporary/spaceObjects/mediumAsteroid/c40000.png"
+    mediumAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/mediumAsteroid/c40000.png"
 local largeAsteroidStyle = {}
-    largeAsteroidStyle["contemporary"] = "assets/style/Contemporary/spaceObjects/largeAsteroid/c10015.png"
+    largeAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/largeAsteroid/c10015.png"
 local IndestructibleAsteroidStyle = {}
-    IndestructibleAsteroidStyle["contemporary"] = "assets/style/Contemporary/spaceObjects/indestructibleAsteroid/c10006.png"
+    IndestructibleAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/indestructibleAsteroid/c10006.png"
 --
 local spaceImagesContemporary = {}
-    spaceImagesContemporary[1] = "assets/style/Contemporary/spaceObjects/spaceJunk/RD3.png"
-    spaceImagesContemporary[2] = "assets/style/Contemporary/spaceObjects/spaceJunk/F5S1.png"
+    spaceImagesContemporary[1] = "assets/style/contemporary/spaceObjects/spaceJunk/RD3.png"
+    spaceImagesContemporary[2] = "assets/style/contemporary/spaceObjects/spaceJunk/F5S1.png"
 --
 local i = math.random(#spaceImagesContemporary)
 local spaceJunkStyle = {}
@@ -62,6 +75,19 @@ function spaceObject.new(
                     instance.resistance = instance.resistance - event.other.efficiency
                 else
                     player.addScore(instance.reward)
+                    explosion = display.newSprite(explosionSheet,explosionSequenceData)
+                        explosion.x = instance.x
+                        explosion.y = instance.y
+                    explosion:setSequence(tostring(instance.reward))
+                    local asteroidDestroyed = audio.loadSound("assets/audio/asteroidDestroyed.wav")
+                    audio.play(asteroidDestroyed)
+                    explosion:play()
+                    local function removeExplosion()
+                        if explosion ~= nil then
+                            display.remove(explosion)
+                        end
+                    end
+                    timer.performWithDelay(255, removeExplosion,1)
                     display.remove(event.target)
                     for i = #objectsTable, 1, -1 do
                         if objectsTable[i] == event.target then
@@ -152,7 +178,7 @@ function spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable,style)
     local radius = 2
     local size = 200
     local resistance = 1000000000000000000000000000000
-    local reward = 0
+    local reward = 10000
     local myName = "spaceObject"
     local instance = spaceObject.new(
         mainGroup,
