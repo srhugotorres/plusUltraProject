@@ -15,7 +15,6 @@ function controller.runGamepadTouch(ship)
 end
 function controller.runKeyboard(ship)
     newKeyboard.new(ship)
-    --Runtime:addEventListener("key",newKeyboard.run)
     Runtime:addEventListener("key",newKeyboard.run)
     timer.performWithDelay( 5, function()  Runtime:addEventListener("key", ship.stopShip) end )
     Runtime:addEventListener("enterFrame", ship.moveShip)

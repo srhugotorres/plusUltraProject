@@ -45,14 +45,14 @@ function scene:create( event )
     -- Code here runs when the scene is first created but has not yet appeared on screen
     background.new(
         backGroup,
-        "contemporary",
         2048,
         2732
     )
     stageUI.run(uiGroup)
-    local ship = newShip.new(mainGroup, "contemporary","gamepadtouch")
-    controller.runGamepadTouch(ship)
-    --controller.runKeyboard(ship)
+    --local ship = newShip.new(mainGroup,"gamepadtouch")
+    --controller.runGamepadTouch(ship)
+    local ship = newShip.new(mainGroup,"keyboard")
+    controller.runKeyboard(ship)
 
     objectsGenerator.run(mainGroup)
     ship.getShip():addEventListener( "collision", onCollision )

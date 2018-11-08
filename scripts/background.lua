@@ -1,11 +1,10 @@
 local centerWidth = display.contentCenterX
 local centerHeight = display.contentCenterY
-local backgroundStyle = {}
-    backgroundStyle["contemporary"] = "assets/style/contemporary/background/spacebackground.png"
+local backgroundStyle = "assets/background/spacebackground.png"
 local background = {}
-function background.new(backGroup,style,sizeX,sizeY)
+function background.new(backGroup,sizeX,sizeY)
     local instance = {}
-    instance.backgroundStyle = backgroundStyle[style]
+    instance.backgroundStyle = backgroundStyle
     instance.background = display.newImageRect(backGroup,instance.backgroundStyle,sizeY,sizeX )
     instance.background.rotation = 90
     instance.background.speed = 0.5

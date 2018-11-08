@@ -4,7 +4,7 @@ local objectsGenerator = {}
 local mainGroupLocal
 
 function objectsGenerator.generate()
-    newAsteroid.createObjects(mainGroupLocal,spaceObjectTable,"contemporary")
+    newAsteroid.createObjects(mainGroupLocal,spaceObjectTable)
     for i = #spaceObjectTable, 1, -1 do
 
         local thisObject = spaceObjectTable[i]

@@ -28,9 +28,9 @@ function scene:show( event )
         local background = display.newImageRect("assets/screens/titleScreen.png", 1920,1080)
             background.x = display.contentCenterX
             background.y = display.contentCenterY
-        local title = display.newText("Plus Ultra",display.contentCenterX,display.contentCenterY - 200,native.systemFont, 100 )
+        local title = display.newText("Plus Ultra",display.contentCenterX,display.contentCenterY * 0.4,native.systemFont, 130 )
             title:setFillColor( 0.82, 0.86, 1 ) 
-        local playButton = display.newText("Play", display.contentCenterX,display.contentCenterY,native.systemFont, 66)
+        local playButton = display.newText("Play", display.contentCenterX,display.contentCenterY * 0.9,native.systemFont, 88)
             playButton:setFillColor( 0.82, 0.86, 1 )
             playButton:addEventListener( "tap", goToGame )
     elseif ( phase == "did" ) then

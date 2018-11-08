@@ -1,37 +1,21 @@
+local newExplosion = require("scripts.elements.explosion")
 local player = require "scripts.playerCreator"
 local physics = require("physics")
 physics.start()
 physics.setGravity(0,0)
--- 
-local explosionSheetData = {
-    width =250,
-    height= 120,
-    numFrames = 12,
-    sheetContentWidth = 768,
-    sheetContentHeight = 512
-}
-local explosionSheet = graphics.newImageSheet("assets/style/contemporary/spaceObjects/explosion/explosion.png", explosionSheetData)
-local explosionSequenceData = {
-    {name="explosion", start = 1, count = 5, time = 200, loopCount = 1}
-}
-local explosion = {}
+
 local explosionCounter = 0
-local smallAsteroidStyle = {}
-    smallAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/smallAsteroid/c40007.png"
-local mediumAsteroidStyle = {}
-    mediumAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/mediumAsteroid/c40000.png"
-local largeAsteroidStyle = {}
-    largeAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/largeAsteroid/c10015.png"
-local IndestructibleAsteroidStyle = {}
-    IndestructibleAsteroidStyle["contemporary"] = "assets/style/contemporary/spaceObjects/indestructibleAsteroid/c10006.png"
+local smallAsteroidSprite = "assets/spaceObjects/smallAsteroid/c40007.png"
+local mediumAsteroidSprite = "assets/spaceObjects/mediumAsteroid/c40000.png"
+local largeAsteroidSprite = "assets/spaceObjects/largeAsteroid/c10015.png"
+local IndestructibleAsteroidSprite = "assets/spaceObjects/indestructibleAsteroid/c10006.png"
 --
-local spaceImagesContemporary = {}
-    spaceImagesContemporary[1] = "assets/style/contemporary/spaceObjects/spaceJunk/RD3.png"
-    spaceImagesContemporary[2] = "assets/style/contemporary/spaceObjects/spaceJunk/F5S1.png"
+local spaceJunkImages = {}
+    spaceJunkImages[1] = "assets/spaceObjects/spaceJunk/RD3.png"
+    spaceJunkImages[2] = "assets/spaceObjects/spaceJunk/F5S1.png"
 --
-local i = math.random(#spaceImagesContemporary)
-local spaceJunkStyle = {}
-    spaceJunkStyle["contemporary"] = spaceImagesContemporary[i]
+local i = math.random(#spaceJunkImages)
+local spaceJunkSprite = spaceJunkImages[i]
 
 --
 local spaceObject ={}
@@ -42,13 +26,13 @@ function spaceObject.new(
     type,
     resistance,
     reward,
-    style,
+    sprite,
     radius,
     sizeX,
     sizeY,
     myName
 )
-    local instance = display.newImageRect(mainGroup,style,sizeX,sizeY)
+    local instance = display.newImageRect(mainGroup,sprite,sizeX,sizeY)
     instance.type = type
     instance.resistance = resistance
     instance.reward = reward
@@ -75,19 +59,16 @@ function spaceObject.new(
                     instance.resistance = instance.resistance - event.other.efficiency
                 else
                     player.addScore(instance.reward)
-                    explosion = display.newSprite(explosionSheet,explosionSequenceData)
-                        explosion.x = instance.x
-                        explosion.y = instance.y
-                    explosion:setSequence(tostring(instance.reward))
                     local asteroidDestroyed = audio.loadSound("assets/audio/asteroidDestroyed.wav")
                     audio.play(asteroidDestroyed)
-                    explosion:play()
-                    local function removeExplosion()
-                        if explosion ~= nil then
-                            display.remove(explosion)
-                        end
-                    end
-                    timer.performWithDelay(255, removeExplosion,1)
+                    local explosion = newExplosion.new(
+                        768,
+                        512,
+                        instance.x,
+                        instance.y
+                    )
+                    timer.performWithDelay(180, explosion.removeExplosion,1)
+
                     display.remove(event.target)
                     for i = #objectsTable, 1, -1 do
                         if objectsTable[i] == event.target then
@@ -104,8 +85,8 @@ function spaceObject.new(
     return instance
 end
 
-function spaceObject.createSmallAsteroid(mainGroup,objectsTable,style)
-    local asteroidStyle = smallAsteroidStyle[style]
+function spaceObject.createSmallAsteroid(mainGroup,objectsTable)
+    local asteroidSprite = smallAsteroidSprite
     local type = "smallAsteroid"
     local radius = 0.5
     local size = 100
@@ -118,7 +99,7 @@ function spaceObject.createSmallAsteroid(mainGroup,objectsTable,style)
         type,
         resistance,
         reward,
-        asteroidStyle,
+        asteroidSprite,
         radius,
         size,
         size,
@@ -126,8 +107,8 @@ function spaceObject.createSmallAsteroid(mainGroup,objectsTable,style)
     )
     return instance
 end
-function spaceObject.createMediumAsteroid(mainGroup,objectsTable,style)
-    local asteroidStyle = mediumAsteroidStyle[style]
+function spaceObject.createMediumAsteroid(mainGroup,objectsTable)
+    local asteroidSprite = mediumAsteroidSprite
     local type = "mediumAsteroid"
     local radius = 1
     local size = 150
@@ -140,7 +121,7 @@ function spaceObject.createMediumAsteroid(mainGroup,objectsTable,style)
         type,
         resistance,
         reward,
-        asteroidStyle,
+        asteroidSprite,
         radius,
         size,
         size,
@@ -150,8 +131,8 @@ function spaceObject.createMediumAsteroid(mainGroup,objectsTable,style)
 
     return instance
 end
-function spaceObject.createLargeAsteroid(mainGroup,objectsTable,style)
-    local asteroidStyle = largeAsteroidStyle[style]
+function spaceObject.createLargeAsteroid(mainGroup,objectsTable)
+    local asteroidSprite = largeAsteroidSprite
     local type = "largeAsteroid"
     local radius = 2
     local size = 180
@@ -164,7 +145,7 @@ function spaceObject.createLargeAsteroid(mainGroup,objectsTable,style)
         type,
         resistance,
         reward,
-        asteroidStyle,
+        asteroidSprite,
         radius,
         size,
         size,
@@ -172,13 +153,13 @@ function spaceObject.createLargeAsteroid(mainGroup,objectsTable,style)
     )
     return instance
 end
-function spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable,style)
-    local asteroidStyle = IndestructibleAsteroidStyle[style]
+function spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable)
+    local asteroidSprite = IndestructibleAsteroidSprite
     local type = "IndestructibleAsteroid"
     local radius = 2
     local size = 200
     local resistance = 1000000000000000000000000000000
-    local reward = 10000
+    local reward = resistance
     local myName = "spaceObject"
     local instance = spaceObject.new(
         mainGroup,
@@ -186,7 +167,7 @@ function spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable,style)
         type,
         resistance,
         reward,
-        asteroidStyle,
+        asteroidSprite,
         radius,
         size,
         size,
@@ -194,8 +175,8 @@ function spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable,style)
     )
     return instance
 end
-function spaceObject.createSpaceJunk(mainGroup,objectsTable,style)
-    local asteroidStyle = spaceJunkStyle[style]
+function spaceObject.createSpaceJunk(mainGroup,objectsTable)
+    local asteroidSprite = spaceJunkSprite
     local type = "spaceJunk"
     local radius = 2
     local size = 80
@@ -208,7 +189,7 @@ function spaceObject.createSpaceJunk(mainGroup,objectsTable,style)
         type,
         resistance,
         reward,
-        asteroidStyle,
+        asteroidSprite,
         radius,
         size,
         size,
@@ -216,20 +197,20 @@ function spaceObject.createSpaceJunk(mainGroup,objectsTable,style)
     )
     return instance
 end
-function spaceObject.createObjects(mainGroup,objectsTable,style)
+function spaceObject.createObjects(mainGroup,objectsTable)
     local choose = math.random(16)
 
     if choose == 1 or choose == 2 or choose == 3 or choose == 4 then
-        return spaceObject.createSmallAsteroid(mainGroup,objectsTable,style)
+        return spaceObject.createSmallAsteroid(mainGroup,objectsTable)
     elseif choose == 5 or choose == 6 or choose == 7 then
-        return spaceObject.createMediumAsteroid(mainGroup,objectsTable,style)
+        return spaceObject.createMediumAsteroid(mainGroup,objectsTable)
     elseif choose == 7 or choose == 8  or choose == 9 then
     elseif choose == 10 or choose == 11 or choose == 12 then
-        return spaceObject.createSpaceJunk(mainGroup,objectsTable,style)
+        return spaceObject.createSpaceJunk(mainGroup,objectsTable)
     elseif choose == 13 or choose == 14 then
-        return spaceObject.createLargeAsteroid(mainGroup,objectsTable,style)
+        return spaceObject.createLargeAsteroid(mainGroup,objectsTable)
     elseif choose == 16 then
-        return spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable,style)
+        return spaceObject.createIndestructibleAsteroid(mainGroup,objectsTable)
     end
 
 end
