@@ -1,5 +1,5 @@
 local composer = require( "composer" )
- 
+local player = require "scripts.playerCreator"
 local scene = composer.newScene()
 local gameover, mainMenuButton,retryButton,scoresButton,background, gameoverBackgroundSound,gameOverCH
 
@@ -82,6 +82,7 @@ function scene:hide( event )
         display.remove(retryButton)
         display.remove(background)
         audio.stop(gameOverCH)
+        player.eraseScore()
         gameoverBackgroundSound = nil
         gameover = nil
         scoresButton:removeEventListener("tap",scoresGame)

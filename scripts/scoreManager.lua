@@ -35,6 +35,7 @@ function scoreManager.compare(scoreLog)
         else
             scoresTable[i] = nil
             scoresTable[i] = scoreLog
+            break
         end
     end
 end

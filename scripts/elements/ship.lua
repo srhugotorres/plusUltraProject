@@ -80,7 +80,6 @@ function ship.new(mainGroup,controller)
                 print("score final definido: " .. player.getFinalScore())
                 scoreManger.add(player.getFinalScore())
                 scoreManger.saveScores()
-                player.eraseScore()
                 instance.destroyShip()
                 local explosion = newExplosion.new(
                     768,
