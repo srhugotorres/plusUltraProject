@@ -1,6 +1,5 @@
 local player = require("scripts.playerCreator")
 local newScore = require("scripts.elements.scoreLog")
-local dateTime = os.date("%d") .. "/" .. os.date("%m") .. " - " .. os.date("%H") .. ":" .. os.date("%M") .. ":" .. os.date("%S")
 
 local json = require( "json" )
 
@@ -9,7 +8,8 @@ local filePath = system.pathForFile( "scores.json", system.DocumentsDirectory )
 local scoreManager = {}
 
 function scoreManager.add(finalScore)
-    print("finalScore: " .. finalScore) 
+    local dateTime = os.date("%d") .. "/" .. os.date("%m") .. " - " .. os.date("%H") .. ":" .. os.date("%M") .. ":" .. os.date("%S")
+
     local scoreLog = newScore.new(
         dateTime,
         finalScore

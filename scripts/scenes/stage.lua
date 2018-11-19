@@ -63,12 +63,16 @@ function scene:show( event )
         )
         stageUI.run(uiGroup)
         playStageBG = audio.play(stageBackGroundSound,{loops = -1})
+        -- Gamepad
+
+        ship = newShip.new(mainGroup,"gamepadtouch")
+        controller.runGamepadTouch(ship)
         
-        --ship = newShip.new(mainGroup,"gamepadtouch")
-        --controller.runGamepadTouch(ship)
-        
-        ship = newShip.new(mainGroup,"keyboard")
-        controller.runKeyboard(ship)
+        -- Keyboard
+
+        --ship = newShip.new(mainGroup,"keyboard")
+        --controller.runKeyboard(ship)
+        --
         generate = objectsGenerator.run(mainGroup)
            
         ship.getShip():addEventListener( "collision", onCollision )
