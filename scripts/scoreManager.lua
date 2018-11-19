@@ -92,12 +92,12 @@ function scoreManager.saveScores()
 	end
 end
 function scoreManager.print(scoreGroup)
+    local positionX = display.contentCenterX 
+    local positionY 
     if  scoresTable[1].score == 0 then
         for i = 1, 5 do
-            if ( scoresTable[i] ) then
-                local positionX = display.contentCenterX * 0.8
-                local positionY = 130 + ( i * 80 )
-                                
+            positionY = 130 + ( i * 80 ) 
+            if ( scoresTable[i] ) then             
                 local rankNum = display.newText( 
                     scoreGroup,
                     i .. ") " .. scoresTable[i].dateTime .. " -   ", 
@@ -125,8 +125,7 @@ function scoreManager.print(scoreGroup)
     else    
     
         for i = 1, 5 do
-            local positionX = display.contentCenterX * 0.8
-            local positionY = 130 + ( i * 80 )
+            positionY = 130 + ( i * 80 )
             local rankNum = display.newText( 
                 scoreGroup,
                 i.. ") ".. scoresTable[i].dateTime .. " -   ", 
