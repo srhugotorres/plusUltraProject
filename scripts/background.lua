@@ -6,7 +6,7 @@ function background.new(backGroup,sizeX,sizeY)
     local instance = {}
     instance.backgroundStyle = backgroundStyle
     instance.background = display.newImageRect(backGroup,instance.backgroundStyle,sizeY,sizeX )
-    instance.background.rotation = 90
+    instance.background.rotation = 180
     instance.background.speed = 0.5
     instance.background.x = centerWidth
     instance.background.y = centerHeight
@@ -16,6 +16,7 @@ function background.new(backGroup,sizeX,sizeY)
         else
             self.y = self.y + self.speed
         end
+        instance.rotation = 90
     end
     instance.background.enterFrame = instance.scroll
     Runtime:addEventListener("enterFrame",instance.background)

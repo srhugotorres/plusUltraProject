@@ -1,7 +1,7 @@
 # Images License
 
 # Styles
-## Contemporary
+#### Background
 
 * Nome: Starfield Alpha 4K
 * Autor: darklighter_designs - https://opengameart.org/users/darklighterdesigns
@@ -9,15 +9,12 @@
 * Fonte: https://opengameart.org/content/starfield-alpha-4k
 * Nome original do arquivo: starfield_alpha.psd
 
-#### Background
-
 #### Ship
 
 * Nome: Fighter2 spaceship
 * Autor: MillionthVector - http://millionthvector.blogspot.de/
 * Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
 * Fonte: https://opengameart.org/content/fighter2-spaceship
-
 
 #### FireBall
 
@@ -62,6 +59,14 @@
 * Licença: Attribution 3.0 Unported (CC BY 3.0) - https://creativecommons.org/licenses/by/3.0/
 * Fonte: https://opengameart.org/content/fire-spell-explosion
 * Nome do arquivo: explosion.png
+
+* Name: explosion
+* Autor: Cuzco - https://opengameart.org/users/cuzco
+* Licença: CC0 1.0 Universal (CC0 1.0)
+Public Domain Dedication - https://creativecommons.org/publicdomain/zero/1.0/
+* Fonte: https://opengameart.org/content/explosion
+* Nome do arquivo: exp2_0.png
+
 
 # Assets
 

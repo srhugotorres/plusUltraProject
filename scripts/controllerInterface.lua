@@ -1,4 +1,3 @@
-
 local newGamepadTouch = require "scripts.elements.gamepadtouch"
 local newKeyboard = require "scripts.keyboard"
 

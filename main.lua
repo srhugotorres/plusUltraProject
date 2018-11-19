@@ -1,3 +1,4 @@
+local scoreManager =  require("scripts.scoreManager")
 display.setStatusBar(display.HiddenStatusBar)
 
 -- CONSTANT VALUES
@@ -16,5 +17,5 @@ display.setStatusBar( display.HiddenStatusBar )
 
 -- include composer
 local composer = require "composer"
-
-composer.gotoScene("scripts.titleScreen")
+scoreManager.loadScores()
+composer.gotoScene("scripts.scenes.titleScreen")

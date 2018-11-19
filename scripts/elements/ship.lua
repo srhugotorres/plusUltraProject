@@ -2,6 +2,7 @@ local player = require "scripts.playerCreator"
 local newBullet = require("scripts.elements.bullet")
 local shipSprite = "assets/ship/ship.png"
 local newExplosion = require("scripts.elements.explosion")
+local scoreManger =  require("scripts.scoreManager")
 -- Físicas
 local physics = require("physics")
 physics.start()
@@ -76,6 +77,10 @@ function ship.new(mainGroup,controller)
             if event.target.myName == "ship" and event.other.myName == "spaceObject" then
                 player.subScore(event.other.reward)
                 player.setFinalScore()
+                print("score final definido: " .. player.getFinalScore())
+                scoreManger.add(player.getFinalScore())
+                scoreManger.saveScores()
+                player.eraseScore()
                 instance.destroyShip()
                 local explosion = newExplosion.new(
                     768,

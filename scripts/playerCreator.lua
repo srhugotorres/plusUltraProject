@@ -4,15 +4,11 @@ local player = newPlayer.new("Player Name")
 function playerCreator.getPlayer()
     return player
 end
-function playerCreator.showScore()
-    print("score atual: " .. player.score)
-end
 function playerCreator.getScore()
     return player.score
 end
 function playerCreator.addScore(score)
     player.score = player.score + score
-    playerCreator.showScore()
 end
 function playerCreator.subScore(score)
     if player.score ~= 0 then
@@ -21,19 +17,18 @@ function playerCreator.subScore(score)
         else
             player.score = player.score - score
         end
-        playerCreator.showScore()
-    else
-        print("sem score")
-        playerCreator.showScore()
     end
-end
-function playerCreator.getName()
-    return player.name
 end
 function playerCreator.getScore()
     return player.score
 end
 function playerCreator.setFinalScore()
     player.finalScore = player.score
+end
+function playerCreator.eraseScore()
+    player.score = 0
+end
+function playerCreator.getFinalScore()
+    return player.finalScore
 end
 return playerCreator

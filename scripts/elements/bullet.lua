@@ -1,5 +1,6 @@
 --
 local bulletSprite = "assets/ship/fireball.png"
+local newExplosion = require("scripts.elements.explosion")
 --
 local physics = require("physics")
 physics.start()
@@ -33,7 +34,8 @@ function bullet.new(mainGroup,shipX,shipY)
         if event.phase == "began" then
             if event.target.myName == "bullet" and event.other.myName == "spaceObject" then
                 display.remove(event.target)
-                
+                local explosion = newExplosion.newSmallExplosion(instance.x,instance.y)
+                timer.performWithDelay(180, explosion.removeExplosion,1)
             end
         end
     end

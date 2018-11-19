@@ -31,11 +31,26 @@ end
 
 function objectsGenerator.run(mainGroup)
     mainGroupLocal = mainGroup
-    timer.performWithDelay( 500, objectsGenerator.generate, 0 )
+    return timer.performWithDelay( 500, objectsGenerator.generate, 0 )
 end
 
 function objectsGenerator.getTable()
     return spaceObjectTable
+end
+function objectsGenerator.stop()
+    if next(spaceObjectTable) ~= nil then 
+        for i = 1, #spaceObjectTable do
+            local thisObject = spaceObjectTable[i] 
+            if thisObject ~= nil then
+                thisObject.myName = nil
+            end
+            display.remove(thisObject)
+            table.remove( spaceObjectTable,i )
+            i = i + 1
+        end
+        objectsGenerator.stop()
+    end
+
 end
 
 return objectsGenerator
